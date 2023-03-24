@@ -1,0 +1,46 @@
+<div class='box-item position-relative'>
+    <div class='products__inner-box pt-1'>
+        {{#when rate 'gt' 0}}
+            <span class='onsale'>-{{rate}}%</span>
+        {{/when}}
+        <div class='product-thumbnail'>
+            <a href='/san-pham/{{slug}}'><img
+                    width='300'
+                    height='300'
+                    src='
+                        {{#if (isArray pimg)}}
+                               {{#first pimg}} {{/first}}
+                        {{else}}
+                            {{pimg}}   
+                        {{/if}}
+                     '
+                    class='attachment-woocommerce_thumbnail size-woocommerce_thumbnail'
+                    alt=''
+                /></a>
+            <div class='product-img-overlay'></div>
+        </div>
+        <div class=''>
+            <h5 class='product-title'>
+                <a href='/san-pham/{{slug}}'>{{pname}}</a>
+            </h5>
+        </div>
+        <div class='product-price'>
+            {{! <span class='giathuong'>Giá niêm yết: </span> }}
+            <span class='Price-amount amount'>
+                <bdi>
+                    {{formatCurrency price}}</bdi>
+            </span>
+        </div>
+        {{#if hasButton}}
+            <div class='product-button'>
+                <a
+                    href='/san-pham/{{slug}}'
+                    class='button product_type_variable'
+                    aria-label='Lựa chọn cho “Bàn Ăn Thông Minh Mahal Kita Home LTX-801M.13.CTD”'
+                    rel='nofollow'
+                    data-id='{{id}}'
+                >Thêm vào giỏ hàng</a></div>
+            <div class='products-cqw-wrapper'> </div>
+        {{/if}}
+    </div>
+</div>

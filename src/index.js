@@ -11,8 +11,8 @@ const bodyParser = require('body-parser');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(cookieParser("tkh"));
-app.use(session({cookie: {maxAge: 60000}}));
+app.use(cookieParser("ESDC"));
+app.use(session());
 app.use(flash());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, "public")));

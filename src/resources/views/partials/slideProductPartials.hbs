@@ -1,0 +1,125 @@
+{{#if isHome }}
+<section class='section d-flex section-donoithat'
+    >
+    <div class='container'>
+        <div class='row
+        {{#if reserved}}
+         flex-row-reverse
+         {{/if}}
+         '
+            >
+            <div class='col-md-6'
+            {{#if reserved}}
+                data-aos='fade-left'
+                    {{else}}
+                data-aos='fade-right'
+            {{/if}}
+                
+                >
+                <div class='widget-wrap'>
+                    <div class='element widget widget-image'>
+                        <div class='widget-container position-relative'>
+                            <div class='image'>
+                                <img
+                                    width='770'
+                                    height='453'
+                                    src='{{img}}'
+                                    class='attachment-large size-large'
+                                    alt=''
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='col-md-6'
+            {{#if reserved}}
+                data-aos='fade-right'
+                    {{else}}
+                data-aos='fade-left'
+            {{/if}}
+                
+                >
+                <div class='widget-wrap'>
+                    <div class='element widget widget-heading'>
+                        <div class='widget-container heading-title-arround'>
+                            <h2 class='heading-title size-default'>
+                                {{title}}
+                            </h2>
+                        </div>
+                    </div>
+                    <div class='element widget widget-text-editor'>
+                        <div class='widget-container'>
+                            <div class='text-editor clearfix'>
+                                <p>
+                                    {{desc}}<a href='/danh-muc-san-pham/{{href}}'><b><i>XEM THÊM</i></b></a></p>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class='section d-flex flex-column' data-aos='fade-up'>
+    <div class="container" style="max-width: 1400px;">
+        <div class='owl-carousel owl-slider products'>
+            {{#each lsProduct}}
+                {{> productPartials hasButton=true}}
+            {{/each}}
+        </div>
+    </div>
+   
+    <div class=' text-center'>
+        <div class='image'>
+            <a href='/danh-muc-san-pham/{{href}}' target='_blank'>
+                <img
+                    width='209'
+                    height='69'
+                    src='/images/xem-them-6.png'
+                    class='attachment-large size-large'
+                    alt=''
+                />
+            </a>
+        </div>
+    </div>
+</section>
+{{else}}
+<section class='section m-4' 
+     data-aos="fade-up"
+    >
+    <div class='container'>
+        <div
+            class='element grid-1 posts--thumbnail-left widget__width-initial grid-tablet-1 grid-mobile-1 widget widget-posts'
+        >
+            <div class='element widget widget-heading heading-title-arround'>
+                <h2 class='heading-title  size-default' style="text-transform: uppercase;">{{title}}</h2>
+            </div>
+        </div>
+        <div class='row products'>
+            {{#each lsProduct}}
+                <div class='col-md-{{#if colNumber}}{{colNumber}}{{else}}2{{/if}}'>
+                    {{> productPartials  hasButton=true}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class=' text-center'>
+        <div class='image'>
+            <a href='/danh-muc-san-pham/{{href}}' target='_blank'>
+                <img
+                    width='209'
+                    height='69'
+                    src='/images/xem-them-6.png'
+                    class='attachment-large size-large'
+                    alt=''
+                />
+            </a>
+        </div>
+    </div>
+</section>
+{{/if}}

@@ -1,0 +1,124 @@
+<style>
+    .modal { position: fixed; top: 0; left: 0; display: none; width: 100%; height: 100%; overflow: hidden; outline: 0; }
+</style>
+<!-- Modal -->
+<div
+    class='modal fade modal-dialog-centered'
+    id='TuVanModal'
+    data-bs-backdrop='static'
+    data-bs-keyboard='false'
+    tabindex='-1'
+    aria-labelledby='staticBackdropLabel'
+    aria-hidden='true'
+>
+    <div class='modal-dialog' role='document'>
+        <div class='modal-content bg-transparent'>
+            <div class='modal-header border-bottom-0'>
+                <div class='logo-s'>
+
+                </div>
+                <h5 class='modal-title text-center' id='exampleModalLabel'>
+                    <img class='mb-4' width='25%' src='/images/cropped-logo-hh-png.png' alt='' />
+                    <br />
+                    ĐĂNG KÝ TƯ VẤN
+                </h5>
+                <br />
+                <button
+                    type='button'
+                    class='close text-light bg-transparent fs-4 fw-bolder position-absolute'
+                    data-bs-dismiss='modal'
+                    style='top:10px;right:10px;'
+                    data-dismiss='modal'
+                    aria-label='Close'
+                >
+                    <span aria-hidden='true'>×</span>
+                </button>
+            </div>
+
+            <form method='post' action='/users/sendInfo'>
+                <div class='modal-body py-0'>
+                    <form action=''>
+                        <div class='billing-fields'>
+                            <div class='billing-fields__field-wrapper'>
+                                <div
+                                    class='form-row my-3 px-2 form-row-first validate-required'
+                                    id='billing_first_name_field'
+                                >
+                                    <label for='billing_first_name' class=''>Họ và tên
+                                    </label>
+                                    <span class='input-wrapper'>
+                                        <input
+                                            type='text'
+                                            class='input-text'
+                                            name='billing_first_name'
+                                            id='billing_first_name'
+                                            placeholder='Họ và tên'
+                                            value=''
+                                            autocomplete='given-name'
+                                        />
+                                    </span>
+                                </div>
+
+                                <div
+                                    class='form-row my-3 px-2 form-row-wide validate-required validate-phone'
+                                    id='billing_phone_field'
+                                >
+                                    <label for='billing_phone' class=''>Số điện thoại
+                                    </label>
+                                    <span class='input-wrapper'>
+                                        <input
+                                            type='tel'
+                                            class='input-text'
+                                            name='billing_phone'
+                                            id='billing_phone'
+                                            placeholder='Phone'
+                                            value=''
+                                            autocomplete='tel'
+                                        />
+                                    </span>
+                                </div>
+                                <div
+                                    class='form-row my-3 px-2 form-row-wide validate-required validate-email'
+                                    id='billing_email_field'
+                                >
+                                    <label for='billing_email' class=''>Địa chỉ email
+                                    </label>
+                                    <span class='input-wrapper'>
+                                        <input
+                                            type='email'
+                                            class='input-text'
+                                            name='billing_email'
+                                            id='billing_email'
+                                            placeholder='Email'
+                                            value=''
+                                            autocomplete='email'
+                                        />
+                                    </span>
+                                </div>
+
+                                <div class='form-row my-3 px-2 notes' id='order_comments_field' data-priority=''>
+                                    <label for='order_comments' class=''>Ghi chú đơn hàng
+                                    </label>
+                                    <span class='input-wrapper'>
+                                        <textarea
+                                            name='order_comments'
+                                            class='input-text'
+                                            id='order_comments'
+                                            placeholder='Nội dung'
+                                            rows='2'
+                                            cols='5'
+                                        ></textarea>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </form>
+            <div class='modal-footer border-0'>
+                <button type='button' class='w-100 py-2 btn btn-modal'>Đăng ký</button>
+            </div>
+        </div>
+    </div>
+</div>

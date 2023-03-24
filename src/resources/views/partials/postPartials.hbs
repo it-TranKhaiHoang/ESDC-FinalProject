@@ -1,0 +1,70 @@
+{{#if isBanTin}}
+    <div class='card blog border-0 work-container work-classic shadow rounded-md overflow-hidden'>
+        <img src='{{images}}' class='img-fluid work-image' alt='{{title}}' style='height:200px' height='293' />
+        <div class='card-body p-0' style='background-color: black;'>
+            <div class='content'>
+                <h5 class='mt-3'>
+                    <a href='/ban-tin/{{slug}}' class='text-light title'>
+                        {{title}}
+                    </a>
+                </h5>
+
+                <div class='text-muted post-date'>
+                    <span> {{date}}</span>
+                </div>
+                <p class='text-muted'>
+                    {{{description}}}</p>
+                <a href='/ban-tin/{{slug}}' class='h6 post__read-more'>
+                    Xem thêm »
+                    <i class='uil uil-angle-right-b align-middle'></i></a>
+            </div>
+        </div>
+    </div>
+{{else if isSales}}
+    <div
+        class='card blog border-0 work-container work-classic shadow rounded-md overflow-hidden'
+        style='background-color:black'
+    >
+        <img src='{{images}}' class='img-fluid work-image' alt='{{title}}' />
+        <div class='card-body p-0'>
+            <div class='content'>
+                <h5 class='mt-3'>
+                    <a href='/ban-tin/{{slug}}' class='text-light title'>
+                        {{title}}
+                    </a>
+                </h5>
+
+                <a href='{{slug}}' class='h6 post__read-more'>
+                    Xem thêm »
+                    <i class='uil uil-angle-right-b align-middle'>
+                    </i>
+                </a>
+            </div>
+        </div>
+    </div>
+{{else}}
+    <article
+        class='post row grid-item post-8024 post type-post status-publish format-standard has-post-thumbnail hentry category-ban-tin'
+    >
+        <div class='col-md-5 p-2'>
+            <a class='post__thumbnail__link' href='/ban-tin/{{slug}}'>
+                <div class='post__thumbnail fit-height'><img
+                        width='770'
+                        height='293'
+                        src='{{images}}'
+                        class='attachment-large size-large'
+                        alt='{{title}}'
+                    /></div>
+            </a>
+        </div>
+        <div class='col-md-7 mb-2'>
+            <div class='post__text p-3'>
+                <h3 class='post__title'>
+                    <a href='{{slug}}'>
+                        {{title}}
+                    </a>
+                </h3>
+            </div>
+        </div>
+    </article>
+{{/if}}

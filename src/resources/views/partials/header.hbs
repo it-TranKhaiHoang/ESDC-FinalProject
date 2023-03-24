@@ -1,0 +1,196 @@
+<nav class='navbar fixed-top navbar-expand-lg navbar-dark bg-dark header'>
+    <div class='container header-container'>
+
+        <a class='navbar-brand logo-container' href='/'>
+            <img src='/images/Logo-chuan-mau.png' class='logo-img' alt='Logo' />
+        </a>
+        <button
+            class='navbar-toggler'
+            type='button'
+            data-bs-toggle='collapse'
+            data-bs-target='#navbarSupportedContent'
+            aria-controls='navbarSupportedContent'
+            aria-expanded='false'
+            aria-label='Toggle navigation'
+        >
+            <span class='navbar-toggler-icon'></span>
+        </button>
+        <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+            <div class='row' style='flex-grow: inherit;'>
+                <div class='col-md-9'>
+                    <div class='sub-category'>
+                        <ul class='navbar-nav me-auto mb-2 mb-lg-0'>
+                            {{#each lsSubCat}}
+                                <li class='nav-item'>
+                                    <a class='nav-link active' aria-current='page' href='{{slug}}'>
+                                        <img src='{{img}}' alt='{{name}}' />
+                                        <h3>{{name}}</h3>
+                                    </a>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+
+                    <div class='search-container p-3'>
+                        {{! <form class='search-form' role='search' action='/san-pham/tim-kiem' method='get'> }}
+                        <div class='search-form__container'>
+                            <input
+                                placeholder='Tìm kiếm tên sản phẩm, mã sản phẩm,…'
+                                class='search-form__input'
+                                type='search'
+                                name='s'
+                                title='Tìm kiếm'
+                                value=''
+                            />
+                            <button class='search-form__submit' type='button' title='Tìm kiếm' aria-label='Tìm kiếm'>
+                                <i aria-hidden='true' class='fas fa-search'></i>
+                                <span class='screen-only'>Tìm kiếm</span>
+                            </button>
+                        </div>
+                        {{! </form> }}
+                    </div>
+                    <ul class='nav justify-content-center menu_container mt-3'>
+                        <li class='nav-item dropdown menu_item'>
+                            <a
+                                class='nav-link dropdown-toggle'
+                                data-bs-toggle='dropdown'
+                                href=''
+                                role='button'
+                                aria-expanded='false'
+                            >Về H & H
+                                <span class='sub-arrow'><i class='fas fa-caret-down'></i></span>
+                            </a>
+
+                            <ul class='dropdown-menu'>
+                                <li><a class='dropdown-item' href='/gioi-thieu'>Giới thiệu</a></li>
+                                <li><a class='dropdown-item' href='/contact'>Liên hệ</a></li>
+                            </ul>
+                        </li>
+
+                        <li class='nav-item dropdown menu_item'>
+                            <a
+                                class='nav-link dropdown-toggle'
+                                data-bs-toggle='dropdown'
+                                href=''
+                                role='button'
+                                aria-expanded='false'
+                            >Sản phẩm
+                                <span class='sub-arrow'><i class='fas fa-caret-down'></i></span>
+                            </a>
+
+                            <ul class='dropdown-menu'>
+                                {{#each lsCat}}
+                                    {{#when level 'eq' '1'}}
+                                        <li><a class='dropdown-item' href='/danh-muc-san-pham/{{slug}}'>
+                                                {{name}}</a>
+                                            <ul class='submenu position-absolute'>
+                                                {{#each children}}
+                                                    {{#when level 'eq' '2'}}
+                                                        <li><a class='dropdown-item' href='/danh-muc-san-pham/{{slug}}'>
+                                                                {{name}}</a>
+
+                                                            <ul class='submenu position-absolute'>
+                                                                {{#each children}}
+                                                                    {{#when level 'eq' '3'}}
+                                                                        <li><a
+                                                                                class='dropdown-item'
+                                                                                href='/danh-muc-san-pham/{{slug}}'
+                                                                            >
+                                                                                {{name}}</a></li>
+                                                                    {{/when}}
+                                                                {{/each}}
+                                                            </ul>
+                                                        </li>
+                                                    {{/when}}
+                                                {{/each}}
+                                            </ul>
+                                        </li>
+                                    {{/when}}
+                                {{/each}}
+                            </ul>
+                        </li>
+
+                        <li class='nav-item dropdown menu_item'>
+                            <a class='nav-link' href='/ban-tin'>
+                                Bản tin H & H
+                            </a>
+                        </li>
+                        <li class='nav-item dropdown menu_item'>
+                            <a
+                                class='nav-link dropdown-toggle'
+                                data-bs-toggle='dropdown'
+                                href=''
+                                role='button'
+                                aria-expanded='false'
+                            >Chính sách
+                                <span class='sub-arrow'><i class='fas fa-caret-down'></i></span>
+                            </a>
+
+                            <ul class='dropdown-menu'>
+                                {{#each lsPolicy}}
+                                    <li><a class='dropdown-item' href='/chinh-sach/{{slug}}'>
+                                            {{title}}</a></li>
+                                {{/each}}
+                            </ul>
+                        </li>
+                        <li class='nav-item dropdown menu_item'>
+                            <a class='nav-link' href='/khuyen-mai'>Khuyến mãi
+                                <img src='/images/hot-icon-menu-item.png' class='hot-img' width='50' />
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class='col-md-3 m-auto'>
+                    <div class='row'>
+                        <div class='col-md-3'>
+                            <div class='cart-container'>
+
+                                <div class='widget-container'>
+                                    <div class='cart-content'>
+                                        <a
+                                            class='cart-contents menu-item'
+                                            href='/gio-hang'
+                                            title='View your shopping cart'
+                                        >
+                                            <i class='fa fa-cart-shopping'>
+                                                <span
+                                                    class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'
+                                                    id='cart-contents-count'
+                                                >
+
+                                                </span>
+                                            </i>
+
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class='cart-heading'>
+                                    <p style='font-size:7px' class='mt-1'>
+                                        GIỎ HÀNG
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-md-9 m-auto'>
+                            <div class='phone-container'>
+                                <ul class='icon-list-items'>
+                                    <li class='icon-list-item'>
+                                        <a href='tel:0902%20627%20008' class='justify-content-center'>
+                                            <span class='icon-list-icon'>
+                                                <i aria-hidden='true' class='text-dark fas fa-phone-alt'></i>
+                                            </span>
+                                            <span class='icon-list-text'>1900 86 68 16</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</nav>

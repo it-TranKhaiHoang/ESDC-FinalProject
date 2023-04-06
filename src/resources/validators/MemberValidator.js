@@ -3,9 +3,9 @@ const MemberService = require('../services/MemberService');
 module.exports = [
     check('email')
         .exists()
-        .withMessage('Email cannot be empty')
+        .withMessage('Email cannot be empty. Please enter an email')
         .notEmpty()
-        .withMessage('Email cannot be empty')
+        .withMessage('Email cannot be empty. Please enter an email')
         .isEmail()
         .withMessage('Invalid full name')
         .custom((value) => {

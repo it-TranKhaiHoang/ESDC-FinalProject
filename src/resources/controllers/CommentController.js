@@ -7,6 +7,7 @@ const CommentController = {
         CommentService.create(comment)
             .then(() => {})
             .catch((err) => {});
+        
     },
 };
 

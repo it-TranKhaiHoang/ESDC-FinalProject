@@ -9,9 +9,9 @@ module.exports = [
         .isEmail()
         .withMessage('Invalid full name')
         .custom((value) => {
-            const authorID = value;
-            MemberService.getOne(authorID).then((author) => {
-                if (author) throw new Error('This email already exists. Please choose another email');
+            const email = value;
+            MemberService.getOne({ email: email }).then((member) => {
+                if (member) throw new Error('This email already exists. Please choose another email');
                 return true;
             });
         }),

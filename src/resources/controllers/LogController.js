@@ -1,7 +1,5 @@
 const LogService = require("../services/LogService");
 
-const LogController = {
-
-};
+const LogController = {};
 
 module.exports = LogController;

@@ -7,7 +7,6 @@ const Member = new Schema({
     job: { type: String },
     email: { type: String, required: true, unique: true },
     role: { type: String, required: true },
-    
-})
+});
 
 module.exports = mongoose.model('Member', Member);

@@ -1,4 +1,4 @@
-const Project  = require("../models/Project");
+const Project = require('../models/Project');
 
 const ProjectService = {
     create: async (data) => {
@@ -7,20 +7,20 @@ const ProjectService = {
     getList: async (condition, options, sortBy) => {
         let skip = options.skip || 0;
         let limit = options.limit || 0;
-        return Project.find(condition)
-            .sort(sortBy)
-            .skip(skip)
-            .limit(limit)
+        return Project.find(condition).sort(sortBy).skip(skip).limit(limit);
     },
-    getOne: async (id) => {
+    getOne: async (condition) => {
+        return Project.findOne(condition);
+    },
+    getOneByID: async (id) => {
         return Project.findById(id);
     },
     update: async (id, data) => {
-        return Project.findByIdAndUpdate(id, {$set: data});
+        return Project.findByIdAndUpdate(id, { $set: data });
     },
     delete: async (id) => {
         return Project.findByIdAndDelete(id);
-    }
+    },
 };
 
 module.exports = ProjectService;

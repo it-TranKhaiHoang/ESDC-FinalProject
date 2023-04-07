@@ -7,16 +7,16 @@ module.exports = [
         .withMessage('Name cannot be empty. Please enter name')
         .notEmpty()
         .withMessage('Name cannot be empty. Please enter name'),
-    check('key')
+    check('start_date')
         .exists()
-        .withMessage('Key cannot be empty. Please enter key')
+        .withMessage('Start date cannot be empty. Please enter start date')
         .notEmpty()
-        .withMessage('Key cannot be empty. Please enter key'),
-    check('type')
+        .withMessage('Start date cannot be empty. Please enter start date'),
+    check('end_date')
         .exists()
-        .withMessage('Type cannot be empty. Please enter type')
+        .withMessage('End date cannot be empty. Please enter end date')
         .notEmpty()
-        .withMessage('Type cannot be empty. Please enter type'),
+        .withMessage('End date cannot be empty. Please enter end date'),
     check('leader')
         .exists()
         .withMessage('Leader cannot be empty. Please choose leader')

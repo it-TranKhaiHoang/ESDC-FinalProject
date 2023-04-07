@@ -16,4 +16,15 @@ module.exports = [
             });
         }),
     check('role').exists().withMessage('Role cannot be empty').notEmpty().withMessage('Role cannot be empty'),
+    check('status').exists().withMessage('Status cannot be empty').notEmpty().withMessage('Status cannot be empty'),
+    check('password')
+        .exists()
+        .withMessage('Password cannot be empty')
+        .notEmpty()
+        .withMessage('Password cannot be empty'),
+    check('position')
+        .exists()
+        .withMessage('Position cannot be empty')
+        .notEmpty()
+        .withMessage('Position cannot be empty'),
 ];

@@ -5,8 +5,8 @@ const Comment = new Schema(
     {
         task: { type: Schema.Types.ObjectId, ref: 'Task' },
         author: { type: Schema.Types.ObjectId, ref: 'Member' },
-        body: { type: String },
-        status: { type: String },
+        body: { type: String, required: true },
+        status: { type: String, required: true },
     },
     {
         timestamps: true,

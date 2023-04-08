@@ -3,15 +3,15 @@ const MemberService = require('../services/MemberService');
 const TaskService = require('../services/TaskService');
 
 module.exports = [
-    check('author')
+    check('leader')
         .exists()
-        .withMessage('Invalid author')
+        .withMessage('Leader cannot be empty. Please choose a leader')
         .notEmpty()
-        .withMessage('Invalid author')
+        .withMessage('Leader cannot be empty. Please choose a leader')
         .custom((value) => {
             const authorID = value;
             MemberService.getOne(authorID).then((author) => {
-                if (!author) throw new Error('Member not exist');
+                if (!author) throw new Error('Leader not exist');
                 return true;
             });
         }),
@@ -28,5 +28,5 @@ module.exports = [
             });
         }),
     check('status').exists().withMessage('Invalid status').notEmpty().withMessage('Invalid status'),
-    check('body').exists().withMessage('Invalid body').notEmpty().withMessage('Invalid body'),
+    check('attachments').exists().withMessage('Invalid attachments').notEmpty().withMessage('Invalid attachments'),
 ];

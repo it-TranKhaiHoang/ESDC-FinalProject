@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 const Log = new Schema({
     author: { type: Schema.Types.ObjectId, ref: 'Member' },
-    msg: { type: String },
+    task: { type: Schema.Types.ObjectId, ref: 'Task' },
+    body: { type: String, required: true },
+    status: { type: String, required: true },
 });
 
 module.exports = mongoose.model('Log', Log);

@@ -29,7 +29,9 @@
     "express-session": "^1.17.3",
     "express-validator": "^6.15.0",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.2",
-    "nodemon": "^2.0.21"
+    "mongoose": "^7.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }

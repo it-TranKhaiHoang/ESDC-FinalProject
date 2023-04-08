@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const handlebars = require("express-handlebars");
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8000;
 const path = require("path");
 require("dotenv").config();
 const session = require("express-session");
@@ -30,5 +30,11 @@ app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "resources/views"));
 
 // Router
+
+app.get('/', (req, res) => {
+  return res.render('pages/index', {
+    layout: 'admin'
+  })
+})
 
 app.listen(port, () => console.log("Server started in http://localhost:8080"));

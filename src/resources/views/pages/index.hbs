@@ -7,72 +7,10 @@
 
      
       <hr>
-      <div class="row">
-        <div class="col-md-8">
-            <div class="row">
-              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3  px-1 ml-2 mb-3">          
-          <div style="background-color: #F4F5F7" class="card rounded-0 shadow-sm px-2 py-2">
-            {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
-            <div class="list-title px-3 py-1 mb-2">To do</div>
-            <div class="task-single">
-                <img src="https://picsum.photos/200/200" alt="">
-                <div class="task-body px-2 py-2">
-                    <div class="task-cap mb-2">
-                        Task 1
-                    </div>
-                    <div class="task-ops">
-                        Option
-                    </div>
-                </div>
-            </div>
-            <div class="btnAddTask px-3 py-1">
-               <i class="fas fa-plus"></i> <span>Create Task</span>
-            </div>
-          </div>          
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3  px-1 ml-2 mb-3">          
-          <div style="background-color: #F4F5F7" class="card rounded-0 shadow-sm px-2 py-2">
-            {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
-            <div class="list-title px-3 py-1 mb-2">On Progress</div>
-            <div class="task-single">
-                <img src="https://picsum.photos/200/200" alt="">
-                <div class="task-body px-2 py-2">
-                    <div class="task-cap mb-2">
-                        Task 1
-                    </div>
-                    <div class="task-ops">
-                        Option
-                    </div>
-                </div>
-            </div>
-            <div class="btnAddTask px-3 py-1">
-               <i class="fas fa-plus"></i> <span>Create Task</span>
-            </div>
-          </div>          
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3  px-1 ml-2 mb-3">          
-          <div style="background-color: #F4F5F7" class="card rounded-0 shadow-sm px-2 py-2">
-            {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
-            <div class="list-title px-3 py-1 mb-2">Done</div>
-            <div class="task-single">
-                <img src="https://picsum.photos/200/200" alt="">
-                <div class="task-body px-2 py-2">
-                    <div class="task-cap mb-2">
-                        Task 1
-                    </div>
-                    <div class="task-ops">
-                        Option
-                    </div>
-                </div>
-            </div>
-            <div class="btnAddTask px-3 py-1">
-               <i class="fas fa-plus"></i> <span>Create Task</span>
-            </div>
-          </div>          
-        </div>
-            </div>
-        </div>
-        <div class="task-info">
+      <div style="position: relative" class="row">
+
+        {{!-- Task Info --}}
+        <div class="task-info col-md-5">
           <h4>Test Task 1</h4>
           
           <div class="link-issue my-3">
@@ -109,18 +47,229 @@
               </div>
             </div>
           </div>
-
-          {{!-- Comments Here --}}
-          <div class="comments-box mb-3"> 
-            <span><strong>Comments</strong></span>
-            <br>
-            
-        </div>
         
                 
-      </div>
+        </div>
+
+        {{!-- Task List --}}
+        <div class="col-md-8">
+            <div class="row">
+              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3  px-1 ml-2 mb-5">          
+          <div style="background-color: #F4F5F7" class="card rounded-0 shadow-sm px-2 py-2">
+            {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
+            <div class="list-title px-3 py-1 mb-2">To do</div>
+            <div class="task-single">
+                <img src="https://picsum.photos/200/200" alt="">
+                <div class="task-body px-2 py-2">
+                    <div class="task-cap mb-2">
+                        Task 1
+                    </div>
+                    <div class="task-ops">
+                        Option
+                    </div>
+                </div>
+            </div>
+            <div class="task-single">
+                <img src="https://picsum.photos/200/200" alt="">
+                <div class="task-body px-2 py-2">
+                    <div class="task-cap mb-2">
+                        Task 1
+                    </div>
+                    <div class="task-ops">
+                        Option
+                    </div>
+                </div>
+            </div>
+            <div class="btnAddTask px-3 py-1">
+               <i class="fas fa-plus"></i> <span>Create Task</span>
+            </div>
+          </div>          
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3  px-1 ml-2 mb-5">          
+                <div style="background-color: #F4F5F7" class="card rounded-0 shadow-sm px-2 py-2">
+                  {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
+                  <div class="list-title px-3 py-1 mb-2">On Progress</div>
+                  <div class="task-single">
+                      <img src="https://picsum.photos/200/200" alt="">
+                      <div class="task-body px-2 py-2">
+                          <div class="task-cap mb-2">
+                              Task 1
+                          </div>
+                          <div class="task-ops">
+                              Option
+                          </div>
+                      </div>
+                  </div>
+                  <div class="btnAddTask px-3 py-1">
+                    <i class="fas fa-plus"></i> <span>Create Task</span>
+                  </div>
+                </div>          
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3  px-1 ml-2 mb-5">          
+                <div style="background-color: #F4F5F7" class="card rounded-0 shadow-sm px-2 py-2">
+                  {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
+                  <div class="list-title px-3 py-1 mb-2">Done</div>
+                  <div class="task-single">
+                      <img src="https://picsum.photos/200/200" alt="">
+                      <div class="task-body px-2 py-2">
+                          <div class="task-cap mb-2">
+                              Task 1
+                          </div>
+                          <div class="task-ops">
+                              Option
+                          </div>
+                      </div>
+                  </div>
+                  <div class="btnAddTask px-3 py-1">
+                    <i class="fas fa-plus"></i> <span>Create Task</span>
+                  </div>
+                </div>          
+              </div>
+
+              <div class="col-md-12" id="fbcomment">
+            <div class="header_comment">
+              <div class="row">
+                <div class="col-md-6 text-left">
+                  <span class="count_comment">14 Comments</span>
+                </div>
+                <div class="col-md-6 text-right">
+                  <span class="sort_title">Sort by</span>
+                  <select class="sort_by">
+                  <option>Top</option>
+                  <option>Newest</option>
+                  <option>Oldest</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="body_comment">
+              <div class="row">
+                <div class="avatar_comment col-md-1">
+                  <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar"/>
+                </div>
+                <div class="box_comment col-md-11">
+                  <textarea class="commentar" placeholder="Add a comment..."></textarea>
+                  <div class="box_post">
+                  <div class="pull-left">
+                    <input type="checkbox" id="post_fb"/>
+                    <label for="post_fb">Also post on Facebook</label>
+                  </div>
+                  <div class="pull-right">
+                    <span>
+                    <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar" />
+                    <i class="fa fa-caret-down"></i>
+                    </span>
+                    <button onclick="submit_comment()" type="button" value="1">Post</button>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <ul id="list_comment" class="col-md-12">
+                  <!-- Start List Comment 1 -->
+                  <li class="box_result row">
+                    <div class="avatar_comment col-md-1">
+                      <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar"/>
+                    </div>
+                    <div class="result_comment col-md-11">
+                      <h4>Renan Silveira</h4>
+                      <p>Recomendo muito a Green BotBet, parei de perder grana com apostas esportivas depois que conheci ela.</p>
+                      <div class="tools_comment">
+                        <a class="like" href="#">Curtir</a>
+                        <span aria-hidden="true"> · </span>
+                        <a class="replay" href="#">Reply</a>
+                        <span aria-hidden="true"> · </span>
+                        <i class="fa fa-thumbs-o-up"></i> <span class="count">1</span> 
+                        <span aria-hidden="true"> · </span>
+                        <span>34m</span>
+                      </div>
+                      <ul class="child_replay">
+                        <li class="box_reply row">
+                          <div class="avatar_comment col-md-1">
+                            <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar"/>
+                          </div>
+                          <div class="result_comment col-md-11">
+                            <h4>Felipe Moreira</h4>
+                            <p>@Renansilveira eu também cara, o green BotBet salvou minha vida rsrsr eu dobro minha banca toda a semana agora, só dou green agora</p>
+                            <div class="tools_comment">
+                              <a class="like" href="#">Curtir</a>
+                              <span aria-hidden="true"> · </span>
+                              <a class="replay" href="#">Reply</a>
+                              <span aria-hidden="true"> · </span>
+                              <i class="fa fa-thumbs-o-up"></i> <span class="count">1</span> 
+                              <span aria-hidden="true"> · </span>
+                              <span>26m</span>
+                            </div>
+                            <ul class="child_replay"></ul>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                  
+                  <!-- Start List Comment 2 -->
+                  <li class="box_result row">
+                    <div class="avatar_comment col-md-1">
+                      <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar"/>
+                    </div>
+                    <div class="result_comment col-md-11">
+                      <h4>Renan Silveira</h4>
+                      <p>Recomendo muito a Green BotBet, parei de perder grana com apostas esportivas depois que conheci ela.</p>
+                      <div class="tools_comment">
+                        <a class="like" href="#">Curtir</a>
+                        <span aria-hidden="true"> · </span>
+                        <a class="replay" href="#">Reply</a>
+                        <span aria-hidden="true"> · </span>
+                        <i class="fa fa-thumbs-o-up"></i> <span class="count">1</span> 
+                        <span aria-hidden="true"> · </span>
+                        <span>34m</span>
+                      </div>
+                            <ul class="child_replay"></ul>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                  
+            
+                  
+                  <!-- Start List Comment 2 -->
+                  <li class="box_result row">
+                    <div class="avatar_comment col-md-1">
+                      <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar"/>
+                    </div>
+                    <div class="result_comment col-md-11">
+                      <h4>Gung Wah</h4>
+                      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.</p>
+                      <div class="tools_comment">
+                        <a class="like" href="#">Like</a>
+                        <span aria-hidden="true"> · </span>
+                        <a class="replay" href="#">Reply</a>
+                        <span aria-hidden="true"> · </span>
+                        <i class="fa fa-thumbs-o-up"></i> <span class="count">1</span> 
+                        <span aria-hidden="true"> · </span>
+                        <span>26m</span>
+                      </div>
+                      <ul class="child_replay"></ul>
+                    </div>
+                  </li>
+                </ul>
+              <button class="show_more" type="button">Load 10 more comments</button>
+              </div>
+              </div>
+		        </div>
+          </div>
+        </div>
+        
+  
+    
     </div>
 
+    
+  
   </main>
+
+  
    
    <script src="/javascript/sidebar.js"></script>

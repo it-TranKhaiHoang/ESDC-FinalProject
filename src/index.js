@@ -33,4 +33,10 @@ app.set('views', path.join(__dirname, 'resources/views'));
 // Router
 app.use('/', router);
 
-app.listen(port, () => console.log('Server started in http://localhost:8080'));
+app.get('/', (req, res) => {
+  return res.render('pages/index', {
+    layout: 'admin'
+  })
+})
+
+app.listen(port, () => console.log("Server started in http://localhost:8080"));

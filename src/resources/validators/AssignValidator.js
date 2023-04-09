@@ -12,7 +12,7 @@ module.exports = [
             const authorID = value;
             MemberService.getOne(authorID).then((author) => {
                 if (!author) throw new Error('Leader not exist');
-                return true;
+                else return true;
             });
         }),
     check('task')
@@ -24,7 +24,7 @@ module.exports = [
             const taskID = value;
             TaskService.getOne(taskID).then((task) => {
                 if (!task) throw new Error('Task not exist');
-                return true;
+                else return true;
             });
         }),
     check('status').exists().withMessage('Invalid status').notEmpty().withMessage('Invalid status'),

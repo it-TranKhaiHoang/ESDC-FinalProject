@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {});
 initCalendar();
 fillOption();
-fillProject();
+//fillProject();
 
 function initCalendar() {
     let calendarEl = document.getElementById('calendar');

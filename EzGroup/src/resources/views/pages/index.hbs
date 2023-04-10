@@ -2,7 +2,36 @@
       <hr>
       <input class="input" name="text" placeholder="Search..." type="search">
       <br>
-
+      
+      {{#if success}}
+          <div class='alert alert-success d-flex align-items-center' role='alert'>
+              <div>
+                  <i class='fa-regular fa-circle-check' style='color: #307722;'></i>
+                  {{success}}
+              </div>
+          </div>
+      {{/if}}
+      {{#if error}}
+          <div class='alert alert-danger d-flex align-items-center' role='alert'>
+              <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='24'
+                  height='24'
+                  fill='currentColor'
+                  class='bi bi-exclamation-triangle-fill flex-shrink-0 me-2'
+                  viewBox='0 0 16 16'
+                  role='img'
+                  aria-label='Warning:'
+              >
+                  <path
+                      d='M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z'
+                  ></path>
+              </svg>
+              <div>
+                  {{error}}
+              </div>
+          </div>
+      {{/if}}
       <hr>
       <div style="position: relative" class="row">
 
@@ -59,28 +88,19 @@
           <div style="background-color: #F4F5F7" class="card rounded-0 shadow-sm px-2 py-2">
             {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
             <div class="list-title px-3 py-1 mb-2">To do</div>
+            {{#each todoTask}}
             <div class="task-single">
                 <img src="https://picsum.photos/200/200" alt="">
                 <div class="task-body px-2 py-2">
                     <div class="task-cap mb-2">
-                        Task 1
+                        {{name}}
                     </div>
                     <div class="task-ops">
-                        Option
+                        {{description}}
                     </div>
                 </div>
             </div>
-            <div class="task-single">
-                <img src="https://picsum.photos/200/200" alt="">
-                <div class="task-body px-2 py-2">
-                    <div class="task-cap mb-2">
-                        Task 1
-                    </div>
-                    <div class="task-ops">
-                        Option
-                    </div>
-                </div>
-            </div>
+            {{/each}}
             <button data-mdb-toggle="modal" data-mdb-target="#createTaskToDo" class="btnAddTask px-3 py-1">
                <i class="fas fa-plus"></i> <span>Create Task</span>
             </button>
@@ -90,44 +110,48 @@
                 <div style="background-color: #F4F5F7" class="card rounded-0 shadow-sm px-2 py-2">
                   {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
                   <div class="list-title px-3 py-1 mb-2">On Progress</div>
-                  <div class="task-single">
-                      <img src="https://picsum.photos/200/200" alt="">
-                      <div class="task-body px-2 py-2">
-                          <div class="task-cap mb-2">
-                              Task 1
-                          </div>
-                          <div class="task-ops">
-                              Option
-                          </div>
-                      </div>
-                  </div>
-                  <button data-mdb-toggle="modal" data-mdb-target="#createTaskOnProgress" class="btnAddTask px-3 py-1">
+                  {{#each progressTask}}
+                    <div class="task-single">
+                        <img src="https://picsum.photos/200/200" alt="">
+                        <div class="task-body px-2 py-2">
+                            <div class="task-cap mb-2">
+                                {{name}}
+                            </div>
+                            <div class="task-ops">
+                                {{description}}
+                            </div>
+                        </div>
+                    </div>
+                  {{/each}}
+                  {{!-- <button data-mdb-toggle="modal" data-mdb-target="#createTaskOnProgress" class="btnAddTask px-3 py-1">
                     <i class="fas fa-plus"></i> <span>Create Task</span>
-                  </button>
+                  </button> --}}
                 </div>          
               </div>
               <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3  px-1 ml-2 mb-5">          
                 <div style="background-color: #F4F5F7" class="card rounded-0 shadow-sm px-2 py-2">
                   {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
                   <div class="list-title px-3 py-1 mb-2">Done</div>
-                  <div class="task-single">
-                      <img src="https://picsum.photos/200/200" alt="">
-                      <div class="task-body px-2 py-2">
-                          <div class="task-cap mb-2">
-                              Task 1
-                          </div>
-                          <div class="task-ops">
-                              Option
-                          </div>
-                      </div>
-                  </div>
-                  <button data-mdb-toggle="modal" data-mdb-target="#createTaskDone" class="btnAddTask px-3 py-1" >
+                  {{#each doneTask}}
+                    <div class="task-single">
+                        <img src="https://picsum.photos/200/200" alt="">
+                        <div class="task-body px-2 py-2">
+                            <div class="task-cap mb-2">
+                                {{name}}
+                            </div>
+                            <div class="task-ops">
+                                {{description}}
+                            </div>
+                        </div>
+                    </div>
+                  {{/each}}
+                  {{!-- <button data-mdb-toggle="modal" data-mdb-target="#createTaskDone" class="btnAddTask px-3 py-1" >
                     <i class="fas fa-plus"></i> <span>Create Task</span>
-                  </button>
+                  </button> --}}
                 </div>          
               </div>
 
-              <div class="col-md-12" id="fbcomment">
+              {{!-- <div class="col-md-12" id="fbcomment">
             <div class="header_comment">
               <div class="row">
                 <div class="col-md-6 text-left">
@@ -261,7 +285,7 @@
               </div>
 		        </div>
           </div>
-        </div>
+        </div> --}}
 
   {{!-- Modal --}}
   <div

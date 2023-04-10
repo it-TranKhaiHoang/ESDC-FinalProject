@@ -19,7 +19,6 @@ const TaskController = {
         const task = {
             project: id,
             name,
-            project: req.params.id,
             status,
             description,
             members: [leader],
@@ -29,7 +28,6 @@ const TaskController = {
             logs: [],
             attachments,
         };
-        // res.json(task);
         TaskService.create(task)
             .then(() => {
                 req.flash('success', 'Create new task successfully');

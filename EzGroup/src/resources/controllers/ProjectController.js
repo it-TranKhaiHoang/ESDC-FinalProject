@@ -1,14 +1,32 @@
+const md5 = require('md5');
 const ProjectService = require('../services/ProjectService');
-
+const TaskService = require('../services/TaskService');
+const moment = require('moment');
 const ProjectController = {
     getProjectManagement: (req, res, next) => {
         const error = req.flash('error') || '';
         const success = req.flash('success') || '';
-        res.render('pages/projectManagement', {
-            layout: 'admin',
-            page: 'Project management',
-            success,
-            error,
+        return ProjectService.getList({}, {}, {}, 'leader').then((projects) => {
+            let listProject = [];
+            projects.forEach((item) => {
+                const project = {
+                    id: item._id,
+                    name: item.name,
+                    start_date: moment(item.start_date).format('LLLL'),
+                    end_date: moment(item.end_date).format('LLLL'),
+                    status: item.status,
+                    leader_fullname: item.leader.fullname,
+                    leader_email: md5(item.leader.email),
+                };
+                listProject.push(project);
+            });
+            res.render('pages/projectManagement', {
+                layout: 'admin',
+                page: 'Project management',
+                success,
+                error,
+                data: listProject,
+            });
         });
     },
     postCreateProject: (req, res, next) => {
@@ -39,10 +57,44 @@ const ProjectController = {
             });
     },
     getDetail: (req, res, next) => {
+        const error = req.flash('error') || '';
+        const success = req.flash('success') || '';
         ProjectService.getOneByID(req.params.id)
             .then((project) => {
                 if (project) {
-                    res.render('pages/index', { layout: 'admin', project, name: project.name, id: project._id });
+                    TaskService.getList({ project: project._id }, {}, {}, 'comments').then((tasks) => {
+                        let todoTask = [];
+                        let progressTask = [];
+                        let doneTask = [];
+                        tasks.forEach((item) => {
+                            const task = {
+                                id: item._id,
+                                name: item.name,
+                                status: item.status,
+                                description: item.description,
+                                members: item.members,
+                                start_date: item.start_date,
+                                end_date: item.end_date,
+                                attachments: item.attachments,
+                                comments: item.comments,
+                                logs: item.logs,
+                            };
+                            if (task.status == 'todo') todoTask.push(task);
+                            else if (task.status == 'progress') progressTask.push(task);
+                            else doneTask.push(task);
+                        });
+                        res.render('pages/index', {
+                            layout: 'admin',
+                            project,
+                            error,
+                            success,
+                            name: project.name,
+                            id: project._id,
+                            todoTask,
+                            progressTask,
+                            doneTask,
+                        });
+                    });
                 }
             })
             .catch((err) => {});

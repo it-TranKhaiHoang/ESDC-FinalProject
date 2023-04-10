@@ -54,13 +54,9 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-app.get('/calendar', (req, res) => {
-    res.render('pages/calendar', { layout: 'admin' });
-});
-
 app.get('/', (req, res) => {
     if (!req.session.email) return res.redirect('/login');
-    return res.render('pages/index', {
+    return res.render('pages/home', {
         layout: 'admin',
         email: md5(req.session.email),
         fullname: req.session.fullname,

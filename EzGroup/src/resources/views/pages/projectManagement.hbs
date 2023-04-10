@@ -104,7 +104,7 @@
                     </tr>
                 </thead>
                 <tbody id='listProject'>
-                    {{!-- {{#if empty}}
+                    {{#if empty}}
                         <td colspan='6'>
                             <p class='fw-bold mb-1'>Empty</p>
                         </td>
@@ -112,36 +112,34 @@
                         {{#each data}}
                             <tr>
                                 <td>
-                                    <p class='fw-bold mb-1'>{{data.name}}</p>
+                                    <a href='/project/{{id}}'><p class='fw-bold mb-1'>{{name}}</p></a>
                                 </td>
                                 <td>
                                     <div class='d-flex align-items-center'>
                                         <img
-                                            src='{{data.leader}}'
+                                            src='https://www.gravatar.com/avatar/{{leader_email}}?s=200&r=pg&d=retro'
                                             class='rounded-circle'
                                             alt=''
                                             style='width: 45px; height: 45px'
                                         />
                                         <div class='ms-3'>
-                                            <p class='fw-bold mb-1'>{{data.leader}}</p>
+                                            <p class='fw-bold mb-1'>{{leader_fullname}}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
+                                    <p class='fw-bold mb-1'>{{start_date}}</p>
+                                </td>
+                                <td>
+                                    <p class='fw-bold mb-1'>{{end_date}}</p>
+                                </td>
+                                <td>
                                     <div class='row mb-1'>
-                                        <span class='badge badge-success rounded-pill d-inline col-8'>{{type}}</span>
+                                        <span class='badge badge-success rounded-pill d-inline col-8'>{{status}}</span>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class='ms-3'>
-                                        <p class='fw-bold mb-1'>{{data.status}}</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    {{data.start_date}}
-                                </td>
-                                <td>
-                                    <button
+                                    {{!-- <button
                                         onclick="renderContent('{{data._id}}')"
                                         type='button'
                                         data-toggle='modal'
@@ -150,11 +148,11 @@
                                         data-mdb-ripple-color='dark'
                                     >
                                         Sửa
-                                    </button>
+                                    </button> --}}
                                 </td>
                             </tr>
                         {{/each}}
-                    {{/if}} --}}
+                    {{/if}}
 
                 </tbody>
             </table>

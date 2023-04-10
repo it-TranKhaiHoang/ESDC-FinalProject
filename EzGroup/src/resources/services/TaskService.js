@@ -4,10 +4,10 @@ const TaskService = {
     create: async (data) => {
         return Task.create(data);
     },
-    getList: async (condition, options, sortBy) => {
+    getList: async (condition, options, sortBy, populate) => {
         let skip = options.skip || 0;
         let limit = options.limit || 0;
-        return Task.find(condition).sort(sortBy).skip(skip).limit(limit);
+        return Task.find(condition).sort(sortBy).skip(skip).limit(limit).populate(populate);
     },
     getOne: async (condition) => {
         return Task.findOne(condition);

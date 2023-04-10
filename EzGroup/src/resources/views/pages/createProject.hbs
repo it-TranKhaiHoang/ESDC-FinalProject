@@ -1,0 +1,104 @@
+{{#if error}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{error}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{{/if}}
+{{#if success}}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{success}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{{/if}}
+
+<div class='container'>
+    <div class='row'>
+        <div class='col-md-12'>
+            <div class='card shadow'>
+                <div class='card-header d-flex justify-content-between'>
+                    <h4>{{pageName}}</h4>
+                    <a type="button" href="/admin/products/storage" class="btn btn-secondary">Trở lại</a>
+                </div>
+                <div class='card-body'>
+                    <form action="/admin/products/create" class="form" enctype="multipart/form-data" method="POST">
+                        <fieldset id="sizeForm">
+
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label class="control-label text-uppercase" for="taskName">Project Name<span style="color:red">*</span></label>
+                                    <input id="taskName" name="taskName" placeholder="Project Name"
+                                    class="form-control" required type="text">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="startDate" class="control-label">Start Date</label>
+                                    <input id="startDate" class="form-control" type="date" />
+                                </div>
+                                <div class="form-group col">
+                                    <label for="endDate" class="control-label">End Date</label>
+                                    <input id="endDate" class="form-control" type="date" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label for="Assignee" class="control-label">Choose Members:</label>
+                                <select class="custom-select" id="Assignee">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div id="chosen-cate" class="form-group chosen-cate">
+                                    <label class='control-label text-uppercase' for=''>Selected Members<span class="text-lowercase text-danger">( * Không trùng lặp * )</span></label>
+                                    <input id="categories" name="categories" placeholder="Category"
+                                    class="form-control" required type="hidden">
+                                </div>  
+                            </div>
+                            
+                        </fieldset>
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-success">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let fileInput = document.getElementById("pimg")
+    let imageContainer = document.getElementById('images-upload')
+    let numOfFiles = document.getElementById('num-of-file')
+
+    function preview() {
+        imageContainer.innerHTML = ""
+        numOfFiles.textContent = `${fileInput.files.length} ảnh đã được chọn`;
+
+        for (i of fileInput.files) {
+            let reader = new FileReader()
+            let figure = document.createElement("figure")
+            let figCap = document.createElement("figcaption")
+
+            figCap.innerText = i.name
+            figure.appendChild(figCap)
+            reader.onload = () => {
+                let img = document.createElement("img");
+                img.setAttribute("src", reader.result);
+                img.setAttribute("width", '50%');
+                figure.insertBefore(img, figCap);
+            }
+            imageContainer.appendChild(figure);
+            reader.readAsDataURL(i)
+        }
+    }
+    CKEDITOR.replace('ckeditor')
+
+    
+</script>

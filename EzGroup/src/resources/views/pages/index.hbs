@@ -15,7 +15,11 @@
           
           <div class="link-issue my-3">
             <div class="interact"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</div>
-          <div class="interact"><i class="fa fa-plus" aria-hidden="true"></i> Add member</div>
+          <button type="button" class="btn btn-primary interact" data-mdb-toggle="modal" data-mdb-target="#staticBackdrop">
+            <i class="fa fa-plus" aria-hidden="true"></i> Add member
+          </button>
+          
+          {{!-- <button data-mdb-toggle="modal" data-mdb-target="#staticBackdrop" type="button" class="interact btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add member</button> --}}
           <div class="interact">...</div>
           </div>
           
@@ -261,15 +265,96 @@
 		        </div>
           </div>
         </div>
-        
-  
-    
     </div>
-
-    
-  
+<!-- Modal -->
   </main>
 
+  {{!-- Modal --}}
+ <div
+        class='modal fade'
+        id='staticBackdrop'
+        data-mdb-backdrop='static'
+        data-mdb-keyboard='false'
+        tabindex='-1'
+        aria-labelledby='staticBackdropLabel'
+        aria-hidden='true'
+    >
+        <div class='modal-dialog modal-lg'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title' id='staticBackdropLabel'>Modal title</h5>
+                    <button type='button' class='btn-close' data-mdb-dismiss='modal' aria-label='Close'></button>
+                </div>
+                <div class='modal-body'>
+                  <table id="foodTable" class="table align-middle mb-0 bg-white">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Ordinal</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="listSeafood">
+                            {{#if empty}}
+                            <td colspan="6">
+                                <p class="fw-bold mb-1">Không có món ăn / đồ uống nào</p>
+                            </td>
+                            {{else}}
+                            {{#each data}}
+                            <tr>
+                                <td>
+                                    <p class="fw-bold mb-1">{{index}}</p>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{getAvatar @email}}" class="rounded-circle" alt=""
+                                            style="width: 45px; height: 45px" />
+                                        <div class="ms-3">
+                                            <p class="fw-bold mb-1">{{name}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row mb-1">
+                                        <span class="badge badge-success rounded-pill d-inline col-8">{{type}}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="ms-3">
+                                        <p class="fw-bold mb-1">{{stringPrice}}</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{createdAt}}
+                                </td>
+                                <td>
+                                    <button onclick="renderContent('{{id}}')" type="button" data-toggle="modal"
+                                        data-target="#newsModal{{id}}" class="btn btn-link btn-rounded btn-sm fw-bold"
+                                        data-mdb-ripple-color="dark">
+                                        Sửa
+                                    </button>
+                                </td>
+                            </tr>
+                            {{/each}}
+                            {{/if}}
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class='modal-footer'>
+                    <button type='button' class='btn btn-secondary' data-mdb-dismiss='modal'>Close</button>
+                    <button type='button' class='btn btn-primary'>Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>
   
-   
+   <script>
+    $(document).ready(function () {
+            $('#foodTable').DataTable();
+        });
+   </script>
    <script src="/javascript/sidebar.js"></script>

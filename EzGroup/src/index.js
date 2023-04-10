@@ -26,7 +26,10 @@ app.engine(
         extname: 'hbs',
         helpers: {
             getAvatar: (email, options) => {
-                return `https://www.gravatar.com/avatar/${md5(email)}/s=200&r=pg&d=retro`;
+                return `https://www.gravatar.com/avatar/${md5(email)}?s=200&r=pg&d=retro`;
+            },
+            inc: function (value, options) {
+                return parseInt(value) + 1;
             },
         },
     }),

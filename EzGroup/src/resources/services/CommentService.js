@@ -4,10 +4,10 @@ const CommentService = {
     create: async (data) => {
         return Comment.create(data);
     },
-    getList: async (condition, options, sortBy) => {
+    getList: async (condition, options, sortBy, populate) => {
         let skip = options.skip || 0;
         let limit = options.limit || 0;
-        return Comment.find(condition).sort(sortBy).skip(skip).limit(limit);
+        return Comment.find(condition).sort(sortBy).skip(skip).limit(limit).populate(populate);
     },
     getOne: async (condition) => {
         return Comment.findOne(condition);

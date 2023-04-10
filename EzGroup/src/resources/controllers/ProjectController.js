@@ -1,7 +1,7 @@
-const md5 = require('md5');
 const ProjectService = require('../services/ProjectService');
 const TaskService = require('../services/TaskService');
 const moment = require('moment');
+const md5 = require('md5');
 const ProjectController = {
     getProjectManagement: (req, res, next) => {
         const error = req.flash('error') || '';
@@ -26,7 +26,7 @@ const ProjectController = {
                 success,
                 error,
                 data: listProject,
-                email: md5(req.session.email),
+                email: req.session.email,
                 fullname: req.session.fullname,
                 position: req.session.position,
             });
@@ -65,17 +65,26 @@ const ProjectController = {
         ProjectService.getOneByID(req.params.id)
             .then((project) => {
                 if (project) {
-                    TaskService.getList({ project: project._id }, {}, {}, 'comments').then((tasks) => {
+                    TaskService.getList({ project: project._id }, {}, {}, 'members').then((tasks) => {
                         let todoTask = [];
                         let progressTask = [];
                         let doneTask = [];
                         tasks.forEach((item) => {
+                            const members = item.members;
+                            let listMembers = [];
+                            members.forEach((m) => {
+                                listMembers.push({
+                                    id: m._id,
+                                    fullname: m.fullname,
+                                    position: m.position,
+                                });
+                            });
                             const task = {
                                 id: item._id,
                                 name: item.name,
                                 status: item.status,
                                 description: item.description,
-                                members: item.members,
+                                members: listMembers,
                                 start_date: item.start_date,
                                 end_date: item.end_date,
                                 attachments: item.attachments,
@@ -83,9 +92,10 @@ const ProjectController = {
                                 logs: item.logs,
                             };
                             if (task.status == 'todo') todoTask.push(task);
-                            else if (task.status == 'progress') progressTask.push(task);
-                            else doneTask.push(task);
+                            else if (task.status == 'progressing') progressTask.push(task);
+                            else if (task.status == 'complete') doneTask.push(task);
                         });
+                        req.session.projectID = project._id;
                         res.render('pages/index', {
                             layout: 'admin',
                             project,

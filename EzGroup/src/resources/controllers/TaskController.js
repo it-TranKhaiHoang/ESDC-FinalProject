@@ -52,6 +52,55 @@ const TaskController = {
                 res.json({ error: err });
             });
     },
+    getList: (req, res, next) => {
+        TaskService.getList({ project: project._id }, {}, {}, 'members').then((tasks) => {
+            let todoTask = [];
+            let progressTask = [];
+            let doneTask = [];
+            tasks.forEach((item) => {
+                const task = {
+                    id: item._id,
+                    name: item.name,
+                    status: item.status,
+                    description: item.description,
+                    members: item.members,
+                    start_date: item.start_date,
+                    end_date: item.end_date,
+                    attachments: item.attachments,
+                    comments: item.comments,
+                    logs: item.logs,
+                };
+                if (task.status == 'todo') todoTask.push(task);
+                else if (task.status == 'progress') progressTask.push(task);
+                else doneTask.push(task);
+            });
+            res.json(todoTask, progressTask, doneTask);
+        });
+    },
+    getComplete: (req, res, next) => {
+        TaskService.update(req.params.id, { status: 'complete' })
+            .then((task) => {
+                req.flash('success', 'Update status successful');
+                return res.redirect(`/project/${req.session.projectID}`);
+            })
+            .catch(() => {
+                req.flash('error', 'Update status failed');
+                return res.redirect(`/project/${req.session.projectID}`);
+            });
+    },
+    getProgressing: (req, res, next) => {},
+    getPending: (req, res, next) => {},
+    getCancel: (req, res, next) => {
+        TaskService.update(req.params.id, { status: 'cancel' })
+            .then((task) => {
+                req.flash('success', 'Update status successful');
+                return res.redirect(`/project/${req.session.projectID}`);
+            })
+            .catch(() => {
+                req.flash('error', 'Update status failed');
+                return res.redirect(`/project/${req.session.projectID}`);
+            });
+    },
 };
 
 module.exports = TaskController;

@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', function () {});
+document.addEventListener('DOMContentLoaded', function () {
+    getNumberOfProject();
+});
 initCalendar();
 fillOption();
 
@@ -87,6 +89,7 @@ function taskClick(id) {
                 const info = document.getElementById('task-info');
                 const countAttachments = data.attachments.length;
                 let taskSingle = ``;
+                let btn = ``;
                 let attachments = data.attachments;
                 attachments.forEach((item) => {
                     const fileName = item.split('/').pop();
@@ -105,14 +108,14 @@ function taskClick(id) {
                     </a>
                     `;
                 });
+                if (data.status == 'pending') btn += `<a href="/task/complete/${data._id} type="button" class="btn btn-success">Accept</a>`;
                 info.innerHTML = `
                 <h4>${data.name}</h4>
                 <div class="link-issue my-3">
-                    <button class="interact btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>
-                    <button type="button" class="btn btn-primary interact" data-mdb-toggle="modal" data-mdb-target="#staticBackdrop">
+                    <button class=" btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>
+                    <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#staticBackdrop">
                         <i class="fa fa-plus" aria-hidden="true"></i> Add member
                     </button>
-                    <button class="interact btn btn-primary">...</button>
                 </div>
                 <div class="description-box mb-3"> 
                     <span><strong>Description</strong></span>
@@ -124,7 +127,28 @@ function taskClick(id) {
                     <br>
                     ${taskSingle}
                 </div>
+                ${btn}
+                <a href="/task/cancel/${data._id}" type="button" class="btn btn-danger">Cancel</a>
                 `;
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.log('Error in Operation');
+        },
+    });
+}
+
+function getNumberOfProject() {
+    $.ajax({
+        url: `/project/list`,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+            if (!data) {
+                console.log('err');
+            } else {
+                const count = document.getElementById('count-project');
+                count.innerText = data.length;
             }
         },
         error: function (xhr, textStatus, errorThrown) {

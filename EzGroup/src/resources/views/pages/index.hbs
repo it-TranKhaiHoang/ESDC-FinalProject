@@ -37,29 +37,29 @@
 
         {{!-- Task Info --}}
         <div id="task-info" class="task-info col-md-5">
-          <h4>Test Task 1</h4>
+          <h4></h4>
           
-          <div class="link-issue my-3">
-            <button class="interact btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>
+          {{!-- <div class="link-issue my-3">
+            <button class="interact btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i></button>
           <button type="button" class="btn btn-primary interact" data-mdb-toggle="modal" data-mdb-target="#staticBackdrop">
-            <i class="fa fa-plus" aria-hidden="true"></i> Add member
-          </button>
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button> --}}
           
           {{!-- <button data-mdb-toggle="modal" data-mdb-target="#staticBackdrop" type="button" class="interact btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add member</button> --}}
-          <button class="interact btn btn-primary">...</button>
-          </div>
+          {{!-- <button class="interact btn btn-primary">...</button>
+          </div> --}}
           
 
           {{!-- Description Here --}}
-          <div class="description-box mb-3"> 
+          {{!-- <div class="description-box mb-3"> 
             <span><strong>Description</strong></span>
             <br>
-            <p>Note: to improve web accessibility, we recommend using aria-hidden="true" to hide icons used purely for decoration.</p>
-          </div>
+            <p></p>
+          </div> --}}
 
 
           {{!-- Attachment Here --}}
-          <div class="attachment-box mb-3"> 
+          {{!-- <div class="attachment-box mb-3"> 
             <span><strong>Attachments (3)</strong></span>
             <br>
             <div class="task-single">
@@ -76,7 +76,7 @@
                 <p class="mb-0">03/04/2023 19:00:00</p>
               </div>
             </div>
-          </div>
+          </div> --}}
           
         </div>
 
@@ -95,7 +95,9 @@
                         {{name}}
                     </div>
                     <div class="task-ops">
-                        {{description}}
+                        {{#each members}}
+                        <i class="fa-solid fa-user"></i> {{fullname}}
+                        {{/each}}
                     </div>
                 </div>
             </div>
@@ -117,7 +119,9 @@
                                 {{name}}
                             </div>
                             <div class="task-ops">
-                                {{description}}
+                                {{#each members}}
+                                <i class="fa-solid fa-user"></i> {{fullname}}
+                                {{/each}}
                             </div>
                         </div>
                     </div>
@@ -139,7 +143,9 @@
                                 {{name}}
                             </div>
                             <div class="task-ops">
-                                {{description}}
+                               {{#each members}}
+                                <i class="fa-solid fa-user"></i> {{fullname}}
+                              {{/each}}
                             </div>
                         </div>
                     </div>

@@ -36,17 +36,17 @@
       <div style="position: relative" class="row">
 
         {{!-- Task Info --}}
-        <div class="task-info col-md-5">
+        <div id="task-info" class="task-info col-md-5">
           <h4>Test Task 1</h4>
           
           <div class="link-issue my-3">
-            <div class="interact"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</div>
+            <button class="interact btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>
           <button type="button" class="btn btn-primary interact" data-mdb-toggle="modal" data-mdb-target="#staticBackdrop">
             <i class="fa fa-plus" aria-hidden="true"></i> Add member
           </button>
           
           {{!-- <button data-mdb-toggle="modal" data-mdb-target="#staticBackdrop" type="button" class="interact btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add member</button> --}}
-          <div class="interact">...</div>
+          <button class="interact btn btn-primary">...</button>
           </div>
           
 
@@ -77,8 +77,7 @@
               </div>
             </div>
           </div>
-        
-                
+          
         </div>
 
         {{!-- Task List --}}
@@ -89,7 +88,7 @@
             {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
             <div class="list-title px-3 py-1 mb-2">To do</div>
             {{#each todoTask}}
-            <div class="task-single">
+            <div class="task-single" onclick="taskClick('{{id}}')">
                 <img src="https://picsum.photos/200/200" alt="">
                 <div class="task-body px-2 py-2">
                     <div class="task-cap mb-2">
@@ -111,7 +110,7 @@
                   {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
                   <div class="list-title px-3 py-1 mb-2">On Progress</div>
                   {{#each progressTask}}
-                    <div class="task-single">
+                    <div class="task-single" onclick="taskClick('{{id}}')">
                         <img src="https://picsum.photos/200/200" alt="">
                         <div class="task-body px-2 py-2">
                             <div class="task-cap mb-2">
@@ -133,7 +132,7 @@
                   {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
                   <div class="list-title px-3 py-1 mb-2">Done</div>
                   {{#each doneTask}}
-                    <div class="task-single">
+                    <div class="task-single" onclick="taskClick('{{id}}')">
                         <img src="https://picsum.photos/200/200" alt="">
                         <div class="task-body px-2 py-2">
                             <div class="task-cap mb-2">

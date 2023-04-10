@@ -74,68 +74,57 @@ function fillOption() {
     });
 }
 
-function fillProject() {
+function taskClick(id) {
     $.ajax({
-        url: `/project/list`,
+        url: `/task/${id}`,
         type: 'GET',
         dataType: 'json',
         success: function (data, textStatus, xhr) {
             if (!data) {
                 console.log('err');
             } else {
-                const TableBody = document.getElementById('listProject');
-                TableBody.innerHTML = ``;
-                if (data.length == 0) {
-                    TableBody.innerHTML = `<td colspan='6'>
-                        <p class='fw-bold mb-1'>Empty</p></td>`;
-                } else {
-                    data.map((p) => {
-                        console.log(p.member);
-                        TableBody.innerHTML += `
-                        <tr>
-                            <td>
-                                <a href="/project/${p._id}"><p class='fw-bold mb-1'>${p.name}</p></a>
-                            </td>
-                            <td>
-                                <div class='d-flex align-items-center'>
-                                        <img
-                                            src='https://www.gravatar.com/avatar/${p.leader.email}?s=200&r=pg&d=retro'
-                                            class='rounded-circle'
-                                            alt=''
-                                            style='width: 45px; height: 45px'
-                                        />
-                                        <div class='ms-3'>
-                                            <p class='fw-bold mb-1'>${p.leader.fullname}</p>
-                                        </div>
-                                    </div>
-                                <p class='fw-bold mb-1'></p>
-                            </td>
-                            <td>
-                                <p class='fw-bold mb-1'>${p.start_date}</p>
-                            </td>
-                            <td>
-                                <p class='fw-bold mb-1'>${p.end_date}</p>
-                            </td>
-                            <td>
-                                <div class='row mb-1'>
-                                    <span class='badge badge-success rounded-pill d-inline col-8'>${p.status}</span>
-                                </div>
-                            </td>
-                            <td>
-                                    <button
-                                        onclick="renderContent('{{data._id}}')"
-                                        type='button'
-                                        data-toggle='modal'
-                                        data-target='#newsModal{{data._id}}'
-                                        class='btn btn-link btn-rounded btn-sm fw-bold'
-                                        data-mdb-ripple-color='dark'
-                                    >
-                                        Sửa
-                                    </button>
-                                </td>
-                        </tr>`;
-                    });
-                }
+                console.log(data);
+                const info = document.getElementById('task-info');
+                const countAttachments = data.attachments.length;
+                let taskSingle = ``;
+                let attachments = data.attachments;
+                attachments.forEach((item) => {
+                    const fileName = item.split('/').pop();
+                    const extension = item.split('.').pop();
+                    let path = '/img/icon/file.png';
+                    if (extension == 'jpg' || extension == 'png' || extension == 'icon' || extension == 'svg')
+                        path = item;
+                    else if (extension == 'pdf') path = '/img/icon/pdf.png';
+                    else if (extension == 'doc' || extension == 'docx') path = '/img/icon/doc.png';
+                    taskSingle += `
+                    <a href="${item}" class="task-single">
+                        <img src="${path}" alt="">
+                        <div class="attach-info px-2 py-2">
+                            <span style="font-weight: 600">${fileName}</span>
+                        </div>
+                    </a>
+                    `;
+                });
+                info.innerHTML = `
+                <h4>${data.name}</h4>
+                <div class="link-issue my-3">
+                    <button class="interact btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>
+                    <button type="button" class="btn btn-primary interact" data-mdb-toggle="modal" data-mdb-target="#staticBackdrop">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add member
+                    </button>
+                    <button class="interact btn btn-primary">...</button>
+                </div>
+                <div class="description-box mb-3"> 
+                    <span><strong>Description</strong></span>
+                    <br>
+                    <p>${data.description}</p>
+                </div>
+                <div class="attachment-box mb-3"> 
+                    <span><strong>Attachments (${countAttachments})</strong></span>
+                    <br>
+                    ${taskSingle}
+                </div>
+                `;
             }
         },
         error: function (xhr, textStatus, errorThrown) {

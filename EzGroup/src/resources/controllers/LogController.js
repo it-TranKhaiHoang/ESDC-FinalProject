@@ -1,4 +1,4 @@
-const LogService = require("../services/LogService");
+const LogService = require('../services/LogService');
 
 const LogController = {};
 

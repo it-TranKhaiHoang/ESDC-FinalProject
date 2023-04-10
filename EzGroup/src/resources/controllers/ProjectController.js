@@ -26,6 +26,9 @@ const ProjectController = {
                 success,
                 error,
                 data: listProject,
+                email: md5(req.session.email),
+                fullname: req.session.fullname,
+                position: req.session.position,
             });
         });
     },
@@ -93,6 +96,9 @@ const ProjectController = {
                             todoTask,
                             progressTask,
                             doneTask,
+                            email: req.session.email,
+                            fullname: req.session.fullname,
+                            position: req.session.position,
                         });
                     });
                 }

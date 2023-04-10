@@ -42,7 +42,7 @@ const ProjectController = {
         ProjectService.getOneByID(req.params.id)
             .then((project) => {
                 if (project) {
-                    res.render('pages/index', { layout: 'admin', project, name: project.name });
+                    res.render('pages/index', { layout: 'admin', project, name: project.name, id: project._id });
                 }
             })
             .catch((err) => {});

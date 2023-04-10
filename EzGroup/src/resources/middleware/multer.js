@@ -1,6 +1,6 @@
 const multer = require('multer');
 const fs = require('fs');
-const root = './src/public/uploads';
+const root = './EzGroup/src/public/uploads';
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

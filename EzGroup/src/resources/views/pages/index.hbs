@@ -264,7 +264,7 @@
         </div>
 
   {{!-- Modal --}}
- <div
+  <div
         class='modal fade'
         id='staticBackdrop'
         data-mdb-backdrop='static'
@@ -340,7 +340,6 @@
                 </div>
                 <div class='modal-footer'>
                     <button type='button' class='btn btn-secondary' data-mdb-dismiss='modal'>Close</button>
-                    <button type='button' class='btn btn-primary'>Understood</button>
                 </div>
             </div>
         </div>
@@ -354,11 +353,12 @@
             <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form method='post' action='/task/create'>
+            <form method='post' action='/task/create' enctype="multipart/form-data">
               <!-- Text input -->
               <div class="mb-4">
                 <label for="exampleFormControlInput1" class="form-label">Task name</label>
                 <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="" required>
+                <input type="text" class="form-control d-none" name="id" value="{{id}}" id="" placeholder="" required>
               </div>
               <!-- 2 column grid layout with text inputs for the first and last names -->
               <div class='row mb-4'>
@@ -377,8 +377,8 @@
               </div>
               <!-- Text input -->
               <div class='form-outline mb-4'>
-                <label for='Assignee' class='control-label'>Choose Members:</label>
-                <select name='leader' class='custom-select' id='Assignee'>
+                <label for='AssigneeTodo' class='control-label'>Choose Members:</label>
+                <select name='leader' class='custom-select' id='AssigneeTodo'>
                   <option selected>Open this select member</option>
                   <option value='1'>One</option>
                   <option value='2'>Two</option>
@@ -387,7 +387,7 @@
               </div>
               <div class="mb-4">
                 <label for="formFile" class="control-label">Attachment:</label>
-                <input class="form-control" type="file" name="file" id="formFile">
+                <input class="form-control" type="file" name="files" id="formFile" multiple>
                 <input class="form-control d-none" type="text" value="todo" name="status" id="formFile">
               </div>
               <div class="mb-4">
@@ -413,11 +413,12 @@
             <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form method='post' action='/task/create'>
+            <form method='post' action='/task/create' enctype="multipart/form-data">
               <!-- Text input -->
               <div class="mb-4">
                 <label for="exampleFormControlInput1" class="form-label">Task name</label>
                 <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="" required>
+                <input type="text" class="form-control d-none" name="id" value="{{id}}" id="" placeholder="" required>
               </div>
               <!-- 2 column grid layout with text inputs for the first and last names -->
               <div class='row mb-4'>
@@ -436,8 +437,8 @@
               </div>
               <!-- Text input -->
               <div class='form-outline mb-4'>
-                <label for='Assignee' class='control-label'>Choose Members:</label>
-                <select name='leader' class='custom-select' id='Assignee'>
+                <label for='AssigneeProgress' class='control-label'>Choose Members:</label>
+                <select name='leader' class='custom-select' id='AssigneeProgress'>
                   <option selected>Open this select member</option>
                   <option value='1'>One</option>
                   <option value='2'>Two</option>
@@ -446,7 +447,7 @@
               </div>
               <div class="mb-4">
                 <label for="formFile" class="control-label">Attachment:</label>
-                <input class="form-control" type="file" name="file" id="formFile">
+                <input class="form-control" type="file" name="files" id="formFile" multiple>
                 <input class="form-control d-none" type="text" value="progress" name="status" id="formFile">
               </div>
               <div class="mb-4">
@@ -472,11 +473,12 @@
             <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form method='post' action='/task/create'>
+            <form method='post' action='/task/create' enctype="multipart/form-data">
               <!-- Text input -->
               <!-- Text input -->
               <div class="mb-4">
                 <label for="exampleFormControlInput1" class="form-label">Task name</label>
+                <input type="text" class="form-control d-none" name="id" value="{{id}}" id="" placeholder="" required>
                 <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="" required>
               </div>
               <!-- 2 column grid layout with text inputs for the first and last names -->
@@ -496,8 +498,8 @@
               </div>
               <!-- Text input -->
               <div class='form-outline mb-4'>
-                <label for='Assignee' class='control-label'>Choose Members:</label>
-                <select name='leader' class='custom-select' id='Assignee'>
+                <label for='AssigneeDone' class='control-label'>Choose Members:</label>
+                <select name='leader' class='custom-select' id='AssigneeDone'>
                   <option selected>Open this select member</option>
                   <option value='1'>One</option>
                   <option value='2'>Two</option>
@@ -506,7 +508,7 @@
               </div>
               <div class="mb-4">
                 <label for="formFile" class="control-label">Attachment:</label>
-                <input class="form-control" type="file" name="file" id="formFile">
+                <input class="form-control" type="file" name="files" id="formFile" multiple>
                 <input class="form-control d-none" type="text" value="done" name="status" id="formFile">
               </div>
               <div class="mb-4">
@@ -524,9 +526,35 @@
       </div>
     </div>
 
-   <script>
+<script>
     $(document).ready(function () {
-            $('#foodTable').DataTable();
-        });
-   </script>
+      $('#foodTable').DataTable();
+    });
+    fillOption('AssigneeTodo');
+    fillOption('AssigneeProgress');
+    AssigneeTodo("AssigneeDone");
+    function fillOption(Assignee) {
+    $.ajax({
+        url: `/member/list`,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+            if (!data) {
+                console.log('err');
+            } else {
+                console.log(data);
+                const select = document.getElementById(Assignee);
+                select.innerHTML = ``;
+                select.innerHTML += `<option selected>Open this select member</option>`;
+                data.map((m) => {
+                    select.innerHTML += `<option value='${m._id}'>${m.fullname}</option>`;
+                });
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.log('Error in Operation');
+        },
+    });
+    }
+</script>
    

@@ -1,31 +1,120 @@
-<main class='page-content'>
-    <!-- Button trigger modal -->
-    <button type='button' class='btn btn-primary' data-mdb-toggle='modal' data-mdb-target='#staticBackdrop'>
-        Launch static backdrop modal
+{{#if error}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{error}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
     </button>
+</div>
+{{/if}}
+{{#if success}}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{success}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{{/if}}
 
-    <!-- Modal -->
-    <div
-        class='modal fade'
-        id='staticBackdrop'
-        data-mdb-backdrop='static'
-        data-mdb-keyboard='false'
-        tabindex='-1'
-        aria-labelledby='staticBackdropLabel'
-        aria-hidden='true'
-    >
-        <div class='modal-dialog'>
-            <div class='modal-content'>
-                <div class='modal-header'>
-                    <h5 class='modal-title' id='staticBackdropLabel'>Modal title</h5>
-                    <button type='button' class='btn-close' data-mdb-dismiss='modal' aria-label='Close'></button>
+<div class='container'>
+    <div class='row'>
+        <div class='col-md-12'>
+            <div class='card shadow'>
+                <div class='card-header d-flex justify-content-between'>
+                    <h4>{{pageName}}</h4>
+                    <a type="button" href="/admin/products/storage" class="btn btn-secondary">Trở lại</a>
                 </div>
-                <div class='modal-body'>...</div>
-                <div class='modal-footer'>
-                    <button type='button' class='btn btn-secondary' data-mdb-dismiss='modal'>Close</button>
-                    <button type='button' class='btn btn-primary'>Understood</button>
+                <div class='card-body'>
+                    <form action="/admin/products/create" class="form" enctype="multipart/form-data" method="POST">
+                        <fieldset id="sizeForm">
+
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label class="control-label text-uppercase" for="taskName">TASK NAME<span style="color:red">*</span></label>
+                                    <input id="taskName" name="taskName" placeholder="Task Name"
+                                    class="form-control" required type="text">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="startDate" class="control-label">Start Date</label>
+                                    <input id="startDate" class="form-control" type="date" />
+                                </div>
+                                <div class="form-group col">
+                                    <label for="endDate" class="control-label">End Date</label>
+                                    <input id="endDate" class="form-control" type="date" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label for="Assignee" class="control-label">Choose Assignees:</label>
+                                <select class="custom-select" id="Assignee">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div id="chosen-cate" class="form-group chosen-cate">
+                                    <label class='control-label text-uppercase' for=''>Selected Assignees<span class="text-lowercase text-danger">( * Không trùng lặp * )</span></label>
+                                    <input id="categories" name="categories" placeholder="Category"
+                                    class="form-control" required type="hidden">
+                                </div>  
+                            </div>
+                            
+                        </fieldset>
+                        
+                        <div class="form-group mt-4">
+                                <label class="control-label text-uppercase" for="attachments">ATTACHMENTS:<span style="color:red">*</span></label>
+                                <div class="form-group-container">
+                                    <input id="attachments" accept="image/*" required="" name="products"
+                                        class="form-control-file" onchange="preview()" type="file" multiple>
+                                    <p id="num-of-file" class="mt-1">Chưa có ảnh nào được chọn</p>
+                                    <div id="images-upload">
+                                    </div>
+                                </div>
+                            </div>
+
+                        <div class="form-group">
+                                <label class="control-label text-uppercase" for="description">TASK DESCRIPTION:</label>
+                                <textarea id="description" name="description" class="ckeditor"></textarea>
+                            </div>
+                        <div class="form-footer">
+                                <button type="submit" class="btn btn-success">Create</button>
+                            </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</main>
+</div>
+
+<script>
+    let fileInput = document.getElementById("pimg")
+    let imageContainer = document.getElementById('images-upload')
+    let numOfFiles = document.getElementById('num-of-file')
+
+    function preview() {
+        imageContainer.innerHTML = ""
+        numOfFiles.textContent = `${fileInput.files.length} ảnh đã được chọn`;
+
+        for (i of fileInput.files) {
+            let reader = new FileReader()
+            let figure = document.createElement("figure")
+            let figCap = document.createElement("figcaption")
+
+            figCap.innerText = i.name
+            figure.appendChild(figCap)
+            reader.onload = () => {
+                let img = document.createElement("img");
+                img.setAttribute("src", reader.result);
+                img.setAttribute("width", '50%');
+                figure.insertBefore(img, figCap);
+            }
+            imageContainer.appendChild(figure);
+            reader.readAsDataURL(i)
+        }
+    }
+    CKEDITOR.replace('ckeditor')
+
+    
+</script>

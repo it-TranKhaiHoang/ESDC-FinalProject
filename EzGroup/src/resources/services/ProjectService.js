@@ -4,10 +4,10 @@ const ProjectService = {
     create: async (data) => {
         return Project.create(data);
     },
-    getList: async (condition, options, sortBy) => {
+    getList: async (condition, options, sortBy, populate) => {
         let skip = options.skip || 0;
         let limit = options.limit || 0;
-        return Project.find(condition).sort(sortBy).skip(skip).limit(limit);
+        return Project.find(condition).sort(sortBy).skip(skip).limit(limit).populate(populate);
     },
     getOne: async (condition) => {
         return Project.findOne(condition);

@@ -27,9 +27,9 @@
 
     {{!-- Css file --}}
     <link rel="stylesheet" href="/css/admin.css">
+    <script src="/dist/index.global.js"></script>
 
-    {{!-- Ckeditor --}}
-    <script src="/ckeditor/ckeditor.js"></script>
+
 </head>
 <body>
   
@@ -37,8 +37,7 @@
         {{> sidebar}} 
         {{!-- Body nằm trong partial sidebar --}}
     </div>
-
-    
+    <script src="/javascript/sidebar.js"></script>
 
     {{!-- Data Table --}}
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -87,6 +86,7 @@
       }
     });
   </script>
+  <script src="http://www.myersdaily.org/joseph/javascript/md5.js"></script>
   <script src="/javascript/main.js"></script>
 </body>
 </html>

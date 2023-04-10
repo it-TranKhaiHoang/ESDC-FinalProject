@@ -5,4 +5,5 @@ const LoginValidator = require('../validators/LoginValidator');
 
 router.post('/login', LoginValidator, MemberController.postLogin);
 
+router.get('/list', MemberController.getList);
 module.exports = router;

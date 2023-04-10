@@ -59,6 +59,18 @@ const MemberController = {
             res.redirect('/login');
         }
     },
+    getList: (req, res, next) => {
+        {
+            MemberService.getList({}, {}, {})
+                .then((members) => {
+                    if (members.length == 0) return res.json({ msg: 'Empty' });
+                    res.json(members);
+                })
+                .catch((err) => {
+                    return res.json({ msg: 'error' });
+                });
+        }
+    },
 };
 
 module.exports = MemberController;

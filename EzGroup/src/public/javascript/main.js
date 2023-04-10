@@ -54,7 +54,7 @@ function initCalendar() {
 
 function fillOption() {
     $.ajax({
-        url: `/member/list`,
+        url: `/member/listLeader`,
         type: 'GET',
         dataType: 'json',
         success: function (data, textStatus, xhr) {
@@ -100,7 +100,7 @@ function taskClick(id) {
                     else if (extension == 'pdf') path = '/img/icon/pdf.png';
                     else if (extension == 'doc' || extension == 'docx') path = '/img/icon/doc.png';
                     taskSingle += `
-                    <a href="${item}" class="task-single">
+                    <a href="${item}" target="_blank" class="task-single">
                         <img src="${path}" alt="">
                         <div class="attach-info px-2 py-2">
                             <span style="font-weight: 600">${fileName}</span>
@@ -108,7 +108,8 @@ function taskClick(id) {
                     </a>
                     `;
                 });
-                if (data.status == 'pending') btn += `<a href="/task/complete/${data._id} type="button" class="btn btn-success">Accept</a>`;
+                if (data.status == 'pending')
+                    btn += `<a href="/task/complete/${data._id} type="button" class="btn btn-success">Accept</a>`;
                 info.innerHTML = `
                 <h4>${data.name}</h4>
                 <div class="link-issue my-3">

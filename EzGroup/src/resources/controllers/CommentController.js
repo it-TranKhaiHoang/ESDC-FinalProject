@@ -7,7 +7,16 @@ const CommentController = {
         CommentService.create(comment)
             .then(() => {})
             .catch((err) => {});
-        
+    },
+    getListCommentByProject: (req, res, next) => {
+        CommentService.getList({project: req.session.projectID}, {}, {createdAt: -1}, 'author')
+        .then((comments) => {
+            if (comments.length == 0) return res.json({ msg: 'Empty' });
+            res.json(comments);
+        })
+        .catch((err) => {
+            return res.json({ msg: 'error' });
+        });
     },
 };
 

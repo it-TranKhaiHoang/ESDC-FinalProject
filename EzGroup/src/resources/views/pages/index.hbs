@@ -98,6 +98,7 @@
                         {{#each members}}
                         <i class="fa-solid fa-user"></i> {{fullname}}
                         {{/each}}
+                        <i class="fa-solid fa-business-time"></i> {{end_date}}
                     </div>
                 </div>
             </div>
@@ -146,6 +147,7 @@
                                {{#each members}}
                                 <i class="fa-solid fa-user"></i> {{fullname}}
                               {{/each}}
+
                             </div>
                         </div>
                     </div>
@@ -156,7 +158,7 @@
                 </div>          
               </div>
 
-              {{!-- <div class="col-md-12" id="fbcomment">
+              <div class="col-md-12" id="fbcomment">
             <div class="header_comment">
               <div class="row">
                 <div class="col-md-6 text-left">
@@ -165,9 +167,9 @@
                 <div class="col-md-6 text-right">
                   <span class="sort_title">Sort by</span>
                   <select class="sort_by">
-                  <option>Top</option>
+                  {{!-- <option>Top</option> --}}
                   <option>Newest</option>
-                  <option>Oldest</option>
+                  {{!-- <option>Oldest</option> --}}
                   </select>
                 </div>
               </div>
@@ -290,7 +292,7 @@
               </div>
 		        </div>
           </div>
-        </div> --}}
+        </div>
 
   {{!-- Modal --}}
   <div
@@ -466,7 +468,7 @@
               </div>
               <!-- Text input -->
               <div class='form-outline mb-4'>
-                <label for='AssigneeProgress' class='control-label'>Choose Members:</label>
+                <label for='AssigneeProgress' class='control-label'>Choose Member:</label>
                 <select name='leader' class='custom-select' id='AssigneeProgress'>
                   <option selected>Open this select member</option>
                   <option value='1'>One</option>
@@ -564,7 +566,7 @@
     AssigneeTodo("AssigneeDone");
     function fillOption(Assignee) {
     $.ajax({
-        url: `/member/list`,
+        url: `/member/listMember`,
         type: 'GET',
         dataType: 'json',
         success: function (data, textStatus, xhr) {

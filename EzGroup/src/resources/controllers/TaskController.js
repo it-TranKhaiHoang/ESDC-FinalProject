@@ -1,7 +1,7 @@
 const TaskService = require('../services/TaskService');
 const LogService = require('../services/LogService');
-const Log = require('../models/Log');
-const mongoose = require('mongoose');
+const AssignService = require('../services/AssignService');
+const Assign = require('../models/Assign');
 const TaskController = {
     getCreateTask: (req, res, next) => {
         res.render('pages/createTask', { layout: 'admin' });
@@ -35,8 +35,15 @@ const TaskController = {
                 const user = req.session.user;
                 LogService.create({ author: user.id, task: t._id, body: 'Create new task' })
                     .then(() => {
-                        req.flash('success', 'Create new task successfully');
-                        res.redirect(`/project/${id}`);
+                        AssignService.create({ leader: leader, task: t._id, attachments: attachments })
+                            .then(() => {
+                                req.flash('success', 'Create new task successfully');
+                                res.redirect(`/project/${id}`);
+                            })
+                            .catch((err) => {
+                                req.flash('error', 'Create new assign fail');
+                                res.redirect(`/project/${id}`);
+                            });
                     })
                     .catch((err) => {
                         req.flash('error', 'Create new log fail');

@@ -3,6 +3,7 @@ const LogService = require('../services/LogService');
 const AssignService = require('../services/AssignService');
 const Assign = require('../models/Assign');
 const CommentService = require('../services/CommentService');
+const Task = require('../models/Task');
 const TaskController = {
     getCreateTask: (req, res, next) => {
         res.render('pages/createTask', { layout: 'admin' });
@@ -215,15 +216,13 @@ const TaskController = {
                     logs: item.logs,
                 };
 
-
                 if (task.status == 'todo') todoTask.push(task);
                 else if (task.status == 'progressing' || task.status == 'pending') progressTask.push(task);
                 else if (task.status == 'done') doneTask.push(task);
             });
 
-            let comments = await CommentService.getList({}, {}, {createdAt: -1}, 'author');
-                
-            
+            let comments = await CommentService.getList({}, {}, { createdAt: -1 }, 'author');
+
             res.render('pages/memberTasks', {
                 layout: 'admin',
                 page: 'Task list',
@@ -236,9 +235,27 @@ const TaskController = {
                 email: req.session.email,
                 fullname: req.session.fullname,
                 position: req.session.position,
-                comments, comment_count: comments.length
+                comments,
+                comment_count: comments.length,
             });
         });
+    },
+    postAddMember: (req, res, next) => {
+        const { taskID } = req.body;
+        // res.json(taskID);
+        // TaskService.getOneByID(taskID)
+        //     .then((task) => {
+        //         if (task) {
+        //             task.members.push(memberID);
+        //             task.save();
+        //             req.flash('success', 'Add member successful');
+        //             return res.redirect(`/project/${req.session.projectID}`);
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         req.flash('error', 'Add member failed ' + err);
+        //         return res.redirect(`/project/${req.session.projectID}`);
+        //     });
     },
 };
 

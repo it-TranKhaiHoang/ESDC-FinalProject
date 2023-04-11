@@ -1,8 +1,9 @@
 const ProjectService = require('../services/ProjectService');
 const TaskService = require('../services/TaskService');
-const CommentService = require('../services/CommentService')
+const CommentService = require('../services/CommentService');
 const moment = require('moment');
 const md5 = require('md5');
+const MemberService = require('../services/MemberService');
 const ProjectController = {
     getProjectManagement: (req, res, next) => {
         const error = req.flash('error') || '';
@@ -70,10 +71,12 @@ const ProjectController = {
                         let todoTask = [];
                         let progressTask = [];
                         let doneTask = [];
+                        let listMembersID = [];
                         tasks.forEach((item) => {
                             const members = item.members;
                             let listMembers = [];
                             members.forEach((m) => {
+                                listMembersID.push(m._id);
                                 listMembers.push({
                                     id: m._id,
                                     fullname: m.fullname,
@@ -97,8 +100,22 @@ const ProjectController = {
                             else if (task.status == 'complete') doneTask.push(task);
                         });
                         req.session.projectID = project._id;
-                        let comments = await CommentService.getList({}, {}, {createdAt: -1}, 'author');
-                
+                        let comments = await CommentService.getList({}, {}, { createdAt: -1 }, 'author');
+                        let MemberNotInProject = await MemberService.getList(
+                            { _id: { $nin: listMembersID }, position: 'member' },
+                            {},
+                            {},
+                        );
+                        let members = [];
+                        MemberNotInProject.forEach((m) => {
+                            members.push({
+                                id: m._id,
+                                fullname: m.fullname,
+                                position: m.position,
+                                email: m.email,
+                                status: m.status,
+                            });
+                        });
                         res.render('pages/index', {
                             layout: 'admin',
                             project,
@@ -112,7 +129,9 @@ const ProjectController = {
                             email: req.session.email,
                             fullname: req.session.fullname,
                             position: req.session.position,
-                            comments, comment_count: comments.length
+                            comments,
+                            comment_count: comments.length,
+                            members,
                         });
                     });
                 }

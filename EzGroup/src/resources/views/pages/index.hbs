@@ -256,61 +256,54 @@
         <div class='modal-dialog modal-lg'>
             <div class='modal-content'>
                 <div class='modal-header'>
-                    <h5 class='modal-title' id='staticBackdropLabel'>Modal title</h5>
+                    <h5 class='modal-title' id='staticBackdropLabel'>Add member</h5>
                     <button type='button' class='btn-close' data-mdb-dismiss='modal' aria-label='Close'></button>
                 </div>
                 <div class='modal-body'>
-                  <table id="foodTable" class="table align-middle mb-0 bg-white">
+                  <table id="memberTable" class="table align-middle mb-0 bg-white">
                         <thead class="bg-light">
                             <tr>
-                                <th>Ordinal</th>
                                 <th>Full Name</th>
-                                <th>text</th>
-                                <th>Role</th>
+                                <th>Email</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody id="listSeafood">
+                        <tbody id="ListMember">
                             {{#if empty}}
                             <td colspan="6">
                                 <p class="fw-bold mb-1">Không có món ăn / đồ uống nào</p>
                             </td>
                             {{else}}
-                            {{#each data}}
+                            {{#each members}}
                             <tr>
                                 <td>
-                                    <p class="fw-bold mb-1">{{index}}</p>
-                                </td>
-                                <td>
                                     <div class="d-flex align-items-center">
-                                        <img src="{{getAvatar @text}}" class="rounded-circle" alt=""
+                                        <img src="https://www.gravatar.com/avatar/{{email}}?s=200&r=pg&d=retro" class="rounded-circle" alt=""
                                             style="width: 45px; height: 45px" />
                                         <div class="ms-3">
-                                            <p class="fw-bold mb-1">{{name}}</p>
+                                            <p class="fw-bold mb-1">{{fullname}}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
+                                    {{email}}
+                                </td>
+                                <td>
                                     <div class="row mb-1">
-                                        <span class="badge badge-success rounded-pill d-inline col-8">{{type}}</span>
+                                        <span class="badge badge-success rounded-pill d-inline col-8">{{status}}</span>
                                     </div>
                                 </td>
+                                <form action="/task/addMember" method="post" class="d-none" enctype="multipart/form-data">
+                                  <input type="text" class="d-none" id="taskID" name="taskID">
+                                  <input type="text" class="d-none" value="{{id}}" name="memberID">
                                 <td>
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1">{{stringPrice}}</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    {{createdAt}}
-                                </td>
-                                <td>
-                                    <button onclick="renderContent('{{id}}')" type="button" data-toggle="modal"
-                                        data-target="#newsModal{{id}}" class="btn btn-link btn-rounded btn-sm fw-bold"
-                                        data-mdb-ripple-color="dark">
-                                        Sửa
+                                    <button data-toggle="modal"
+                                        class="btn btn-link btn-rounded btn-sm fw-bold">
+                                        Add
                                     </button>
                                 </td>
+                                </form>
                             </tr>
                             {{/each}}
                             {{/if}}
@@ -508,7 +501,7 @@
 
 <script>
     $(document).ready(function () {
-      $('#foodTable').DataTable();
+      $('#memberTable').DataTable();
     });
     fillOption('AssigneeTodo');
     fillOption('AssigneeProgress');

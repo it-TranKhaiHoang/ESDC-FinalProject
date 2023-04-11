@@ -116,7 +116,7 @@ function taskClick(id) {
                 <h4>${data.name}</h4>
                 <div class="link-issue my-3">
                     <button class=" btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>
-                    <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#staticBackdrop">
+                    <button type="button" class="btn btn-primary" data-id="${id}" data-mdb-toggle="modal" data-mdb-target="#staticBackdrop">
                         <i class="fa fa-plus" aria-hidden="true"></i> Add member
                     </button>
                 </div>
@@ -138,6 +138,10 @@ function taskClick(id) {
         error: function (xhr, textStatus, errorThrown) {
             console.log('Error in Operation');
         },
+    });
+    $('#staticBackdrop').on('show.bs.modal', function (e) {
+        let id = $(e.relatedTarget).data('id');
+        $(this).find('#taskID').val(id);
     });
 }
 
@@ -230,4 +234,3 @@ function MemberTaskClick(id) {
         $(this).find('#TaskID').val(id);
     });
 }
-

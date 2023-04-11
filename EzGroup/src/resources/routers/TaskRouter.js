@@ -12,5 +12,6 @@ router.get('/progressing/:id', auth, TaskController.getProgressing);
 router.get('/pending/:id', auth, TaskController.getPending);
 router.get('/cancel/:id', auth, TaskController.getCancel);
 router.get('/unqualified/:id', auth, TaskController.getUnqualified);
+router.post('/addMember', TaskController.postAddMember);
 router.get('/:id', auth, TaskController.getDetail);
 module.exports = router;

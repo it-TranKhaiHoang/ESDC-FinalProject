@@ -6,7 +6,7 @@ const AssignController = {
     // POST: /assign/create
     postCreateAssign: (req, res, next) => {
         const files = req.files;
-        const { id, name, description } = req.body;
+        const { id, description } = req.body;
         if (!files) {
             req.flash('error', 'Please choose files');
             return res.redirect(`/task/list}`);

@@ -1,7 +1,8 @@
 const role = (role) => {
     return (req, res, next) => {
-        if (role.includes(req.user.role)) {
-            return res.status(403).flash('error', 'Access denied').redirect();
+        if (role.includes(req.session.position)) {
+            req.flash('error', 'Access denied');
+            return res.redirect('/logout');
         }
         next();
     };

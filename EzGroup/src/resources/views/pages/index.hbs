@@ -33,7 +33,7 @@
           </div>
       {{/if}}
       <hr>
-      <div style="position: relative" class="row">
+      <div style="position: relative; min-height: 500px" class="row">
 
         {{!-- Task Info --}}
         <div id="task-info" class="task-info col-md-5">
@@ -89,16 +89,18 @@
             <div class="list-title px-3 py-1 mb-2">To do</div>
             {{#each todoTask}}
             <div class="task-single" onclick="taskClick('{{id}}')">
-                <img src="https://picsum.photos/200/200" alt="">
+                {{!-- <img src="https://picsum.photos/200/200" alt=""> --}}
                 <div class="task-body px-2 py-2">
                     <div class="task-cap mb-2">
                         {{name}}
                     </div>
                     <div class="task-ops">
+                        <i class="fa-solid fa-business-time"></i> {{start_date}} -> {{end_date}}
+                        <br>
+                        <i class="fa-solid fa-user"></i>
                         {{#each members}}
-                        <i class="fa-solid fa-user"></i> {{fullname}}
+                         {{fullname}} -
                         {{/each}}
-                        <i class="fa-solid fa-business-time"></i> {{end_date}}
                     </div>
                 </div>
             </div>
@@ -158,7 +160,13 @@
                 </div>          
               </div>
 
-              <div class="col-md-12" id="fbcomment">
+              
+		        </div>
+          </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10" id="fbcomment">
             <div class="header_comment">
               <div class="row">
                 <div class="col-md-6 text-left">
@@ -290,9 +298,7 @@
               <button class="show_more" type="button">Load 10 more comments</button>
               </div>
               </div>
-		        </div>
-          </div>
-        </div>
+      </div>
 
   {{!-- Modal --}}
   <div

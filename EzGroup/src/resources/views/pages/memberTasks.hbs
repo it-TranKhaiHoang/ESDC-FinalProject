@@ -33,7 +33,7 @@
           </div>
       {{/if}}
       <hr>
-      <div style="position: relative" class="row">
+      <div style="position: relative; min-height: 500px" class="row">
 
         {{!-- Task Info --}}
         <div id="task-info" class="task-info col-md-5">
@@ -89,7 +89,7 @@
             <div class="list-title px-3 py-1 mb-2">To do</div>
             {{#each todoTask}}
             <div class="task-single" onclick="MemberTaskClick('{{id}}')">
-                <img src="https://picsum.photos/200/200" alt="">
+                {{!-- <img src="https://picsum.photos/200/200" alt=""> --}}
                 <div class="task-body px-2 py-2">
                     <div class="task-cap mb-2">
                         {{name}}
@@ -108,7 +108,7 @@
                   <div class="list-title px-3 py-1 mb-2">On Progress</div>
                   {{#each progressTask}}
                     <div class="task-single" onclick="MemberTaskClick('{{id}}')">
-                        <img src="https://picsum.photos/200/200" alt="">
+                        {{!-- <img src="https://picsum.photos/200/200" alt=""> --}}
                         <div class="task-body px-2 py-2">
                             <div class="task-cap mb-2">
                                 {{name}}
@@ -130,7 +130,7 @@
                   <div class="list-title px-3 py-1 mb-2">Done</div>
                   {{#each doneTask}}
                     <div class="task-single" onclick="MemberTaskClick('{{id}}')">
-                        <img src="https://picsum.photos/200/200" alt="">
+                        {{!-- <img src="https://picsum.photos/200/200" alt=""> --}}
                         <div class="task-body px-2 py-2">
                             <div class="task-cap mb-2">
                                 {{name}}
@@ -147,11 +147,17 @@
                 </div>          
               </div>
 
-              <div class="col-md-12" id="fbcomment">
+              
+		        </div>
+          </div>
+        </div>
+
+      <div class="row">
+          <div class="col-md-10" id="fbcomment">
             <div class="header_comment">
               <div class="row">
                 <div class="col-md-6 text-left">
-                  <span class="count_comment">14 Comments</span>
+                  <span class="count_comment">{{comment_count}} Comments</span>
                 </div>
                 <div class="col-md-6 text-right">
                   <span class="sort_title">Sort by</span>
@@ -167,21 +173,21 @@
             <div class="body_comment">
               <div class="row">
                 <div class="avatar_comment col-md-1">
-                  <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar"/>
+                  <img src="https://www.gravatar.com/avatar/{{email}}?s=200&r=pg&d=retro" alt="avatar"/>
                 </div>
                 <div class="box_comment col-md-11">
-                  <textarea class="commentar" placeholder="Add a comment..."></textarea>
+                  <textarea class="commentar" placeholder="Add a comment... "></textarea>
                   <div class="box_post">
                   <div class="pull-left">
-                    <input type="checkbox" id="post_fb"/>
-                    <label for="post_fb">Also post on Facebook</label>
+                    {{!-- <input type="checkbox" id="post_fb"/>
+                    <label for="post_fb">Also post on Facebook</label> --}}
                   </div>
                   <div class="pull-right">
-                    <span>
+                    {{!-- <span>
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar" />
                     <i class="fa fa-caret-down"></i>
-                    </span>
-                    <button onclick="submit_comment()" type="button" value="1">Post</button>
+                    </span> --}}
+                    <button data-author="{{uid}}" class="btnComment" onclick="submit_comment()" type="button" value="1">Post</button>
                   </div>
                   </div>
                 </div>
@@ -189,80 +195,14 @@
               <div class="row">
                 <ul id="list_comment" class="col-md-12">
                   <!-- Start List Comment 1 -->
+                  {{#each comments}}
                   <li class="box_result row">
                     <div class="avatar_comment col-md-1">
-                      <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar"/>
+                      <img src="https://www.gravatar.com/avatar/{{author.email}}?s=200&r=pg&d=retro" alt="avatar"/>
                     </div>
                     <div class="result_comment col-md-11">
-                      <h4>Renan Silveira</h4>
-                      <p>Recomendo muito a Green BotBet, parei de perder grana com apostas esportivas depois que conheci ela.</p>
-                      <div class="tools_comment">
-                        <a class="like" href="#">Curtir</a>
-                        <span aria-hidden="true"> · </span>
-                        <a class="replay" href="#">Reply</a>
-                        <span aria-hidden="true"> · </span>
-                        <i class="fa fa-thumbs-o-up"></i> <span class="count">1</span> 
-                        <span aria-hidden="true"> · </span>
-                        <span>34m</span>
-                      </div>
-                      <ul class="child_replay">
-                        <li class="box_reply row">
-                          <div class="avatar_comment col-md-1">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar"/>
-                          </div>
-                          <div class="result_comment col-md-11">
-                            <h4>Felipe Moreira</h4>
-                            <p>@Renansilveira eu também cara, o green BotBet salvou minha vida rsrsr eu dobro minha banca toda a semana agora, só dou green agora</p>
-                            <div class="tools_comment">
-                              <a class="like" href="#">Curtir</a>
-                              <span aria-hidden="true"> · </span>
-                              <a class="replay" href="#">Reply</a>
-                              <span aria-hidden="true"> · </span>
-                              <i class="fa fa-thumbs-o-up"></i> <span class="count">1</span> 
-                              <span aria-hidden="true"> · </span>
-                              <span>26m</span>
-                            </div>
-                            <ul class="child_replay"></ul>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                  
-                  <!-- Start List Comment 2 -->
-                  <li class="box_result row">
-                    <div class="avatar_comment col-md-1">
-                      <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar"/>
-                    </div>
-                    <div class="result_comment col-md-11">
-                      <h4>Renan Silveira</h4>
-                      <p>Recomendo muito a Green BotBet, parei de perder grana com apostas esportivas depois que conheci ela.</p>
-                      <div class="tools_comment">
-                        <a class="like" href="#">Curtir</a>
-                        <span aria-hidden="true"> · </span>
-                        <a class="replay" href="#">Reply</a>
-                        <span aria-hidden="true"> · </span>
-                        <i class="fa fa-thumbs-o-up"></i> <span class="count">1</span> 
-                        <span aria-hidden="true"> · </span>
-                        <span>34m</span>
-                      </div>
-                            <ul class="child_replay"></ul>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                  
-            
-                  
-                  <!-- Start List Comment 2 -->
-                  <li class="box_result row">
-                    <div class="avatar_comment col-md-1">
-                      <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar"/>
-                    </div>
-                    <div class="result_comment col-md-11">
-                      <h4>Gung Wah</h4>
-                      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.</p>
+                      <h4>{{author.fullname}}</h4>
+                      <p>{{body}}</p>
                       <div class="tools_comment">
                         <a class="like" href="#">Like</a>
                         <span aria-hidden="true"> · </span>
@@ -270,17 +210,22 @@
                         <span aria-hidden="true"> · </span>
                         <i class="fa fa-thumbs-o-up"></i> <span class="count">1</span> 
                         <span aria-hidden="true"> · </span>
-                        <span>26m</span>
+                        <span>{{formatDate createdAt}}</span>
                       </div>
-                      <ul class="child_replay"></ul>
+                      
                     </div>
                   </li>
+                  {{/each}}
+                  
+                  
+                 </ul>
+                    </div>
+                  </li>
+                  
+ 
                 </ul>
-              <button class="show_more" type="button">Load 10 more comments</button>
               </div>
               </div>
-		        </div>
-          </div>
         </div>
 
 
@@ -318,6 +263,6 @@
     
 
 <script>
-    
+   
 </script>
    

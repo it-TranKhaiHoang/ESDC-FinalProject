@@ -7,7 +7,7 @@ const CommentService = {
     getList: async (condition, options, sortBy, populate) => {
         let skip = options.skip || 0;
         let limit = options.limit || 0;
-        return Comment.find(condition).sort(sortBy).skip(skip).limit(limit).populate(populate);
+        return Comment.find(condition).sort(sortBy).skip(skip).limit(limit).populate(populate).lean();
     },
     getOne: async (condition) => {
         return Comment.findOne(condition);

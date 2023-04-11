@@ -2,6 +2,7 @@ const TaskService = require('../services/TaskService');
 const LogService = require('../services/LogService');
 const AssignService = require('../services/AssignService');
 const Assign = require('../models/Assign');
+const CommentService = require('../services/CommentService');
 const TaskController = {
     getCreateTask: (req, res, next) => {
         res.render('pages/createTask', { layout: 'admin' });
@@ -190,18 +191,20 @@ const TaskController = {
                 return res.redirect(`/project/${req.session.projectID}`);
             });
     },
-    getTaskByMember: (req, res, next) => {
+    getTaskByMember: async (req, res, next) => {
         const error = req.flash('error');
         const success = req.flash('success');
         const user = req.session.user;
-        TaskService.getList({ members: user.id }, {}, {}, 'members').then((tasks) => {
+        TaskService.getList({ members: user.id }, {}, {}, 'members').then(async (tasks) => {
             let todoTask = [];
             let progressTask = [];
             let doneTask = [];
-            tasks.forEach((item) => {
+
+            tasks.forEach(async (item) => {
                 const task = {
                     id: item._id,
                     name: item.name,
+                    project: item.project,
                     status: item.status,
                     description: item.description,
                     members: item.members,
@@ -211,10 +214,16 @@ const TaskController = {
                     comments: item.comments,
                     logs: item.logs,
                 };
+
+
                 if (task.status == 'todo') todoTask.push(task);
                 else if (task.status == 'progressing' || task.status == 'pending') progressTask.push(task);
                 else if (task.status == 'done') doneTask.push(task);
             });
+
+            let comments = await CommentService.getList({}, {}, {createdAt: -1}, 'author');
+                
+            
             res.render('pages/memberTasks', {
                 layout: 'admin',
                 page: 'Task list',
@@ -223,9 +232,11 @@ const TaskController = {
                 todoTask,
                 progressTask,
                 doneTask,
+                uid: req.session.user.id,
                 email: req.session.email,
                 fullname: req.session.fullname,
                 position: req.session.position,
+                comments, comment_count: comments.length
             });
         });
     },

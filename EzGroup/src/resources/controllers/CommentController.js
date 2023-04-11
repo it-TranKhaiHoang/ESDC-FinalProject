@@ -5,7 +5,9 @@ const CommentController = {
         const { author, body } = req.body;
         const comment = { author, body };
         CommentService.create(comment)
-            .then(() => {})
+            .then(() => {
+                return res.status(200).send({success: true})
+            })
             .catch((err) => {});
     },
     getListCommentByProject: (req, res, next) => {

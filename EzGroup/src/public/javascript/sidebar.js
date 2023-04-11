@@ -29,7 +29,21 @@ $(".sidebar-dropdown > a").click(function() {
   
   
   function submit_comment(){
-    var comment = $('.commentar').val();
+    var body = $('.commentar').val();
+    var author = $('.btnComment').data('author');
+    
+    $.ajax({
+      url: '/comment/post',
+      method: 'POST',
+      data: { body, author},
+      success: function(result) {
+        console.log(result);
+      },
+      error: function(err) {
+        console.log(err);
+      }
+    })
+
     el = document.createElement('li');
     el.className = "box_result row";
     el.innerHTML =
@@ -38,7 +52,7 @@ $(".sidebar-dropdown > a").click(function() {
       '</div>'+
       '<div class=\"result_comment col-md-11\">'+
       '<h4>Anonimous</h4>'+
-      '<p>'+ comment +'</p>'+
+      '<p>'+ body +'</p>'+
       '<div class=\"tools_comment\">'+
       '<a class=\"like\" href=\"#\">Like</a><span aria-hidden=\"true\"> · </span>'+
       '<i class=\"fa fa-thumbs-o-up\"></i> <span class=\"count\">0</span>'+
@@ -53,6 +67,7 @@ $(".sidebar-dropdown > a").click(function() {
   }
   
   $(document).ready(function() {
+    $('#task-info').hide();
     $('#list_comment').on('click', '.like', function (e) {
       $current = $(this);
       var x = $current.closest('div').find('.like').text().trim();

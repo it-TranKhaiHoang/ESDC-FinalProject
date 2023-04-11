@@ -77,6 +77,7 @@ function fillOption() {
 }
 
 function taskClick(id) {
+    $('#task-info').show();
     $.ajax({
         url: `/task/${id}`,
         type: 'GET',
@@ -160,6 +161,7 @@ function getNumberOfProject() {
 }
 
 function MemberTaskClick(id) {
+    $('#task-info').show();
     $.ajax({
         url: `/task/${id}`,
         type: 'GET',
@@ -228,3 +230,4 @@ function MemberTaskClick(id) {
         $(this).find('#TaskID').val(id);
     });
 }
+

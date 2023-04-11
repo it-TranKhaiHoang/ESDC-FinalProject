@@ -7,7 +7,7 @@ const TaskService = {
     getList: async (condition, options, sortBy, populate) => {
         let skip = options.skip || 0;
         let limit = options.limit || 0;
-        return Task.find(condition).sort(sortBy).skip(skip).limit(limit).populate(populate);
+        return Task.find(condition).sort(sortBy).skip(skip).limit(limit).populate(populate).lean();
     },
     getOne: async (condition) => {
         return Task.findOne(condition);

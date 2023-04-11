@@ -39,6 +39,9 @@ app.engine(
                 if (val == 'member')
                     return options.fn(this)
             },
+            formatDate: (date) => {
+                return date.toLocaleString('vi-vn')
+            }
         },
     }),
 );

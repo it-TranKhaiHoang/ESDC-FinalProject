@@ -2,7 +2,7 @@ const ProjectService = require('../services/ProjectService');
 const TaskService = require('../services/TaskService');
 const CommentService = require('../services/CommentService');
 const moment = require('moment');
-const API_URL = process.env.API_URL || 'http://localhost:5000/api/'
+const API_URL = process.env.API_URL || 'http://localhost:5000/api/';
 const md5 = require('md5');
 const fetch = require('node-fetch');
 const MemberService = require('../services/MemberService');
@@ -19,8 +19,6 @@ const ProjectController = {
                     start_date: moment(item.start_date).format('LLLL'),
                     end_date: moment(item.end_date).format('LLLL'),
                     status: item.status,
-                    leader_fullname: item.leader.fullname,
-                    leader_email: md5(item.leader.email),
                 };
                 listProject.push(project);
             });
@@ -41,35 +39,31 @@ const ProjectController = {
         const project = { leader, name, status: 'created' };
         ProjectService.create(project)
             .then(async (project) => {
-
                 let user = await MemberService.getOneByID(leader);
                 let mail_option = {
                     receiver: user.email,
                     subject: 'Project Initialization',
                     html: `<p>You just have become leader of an project</p>
-                          <p>Link: <a href="http://localhost:8080/project/${project._id}" /></p>    
-                    `
-                }
+                          <p>Link: http://localhost:8080/project/${project._id}</p>    
+                    `,
+                };
                 let body = JSON.stringify(mail_option);
                 req.mail_body = body;
                 await fetch(API_URL + 'mail/send-email', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json'},
+                    headers: { 'Content-Type': 'application/json' },
                     body: body,
-                })
-                .then(async result => {
+                }).then(async (result) => {
                     result = await result.json();
                     console.log(result);
-                    if(result.success) {
+                    if (result.success) {
                         req.flash('success', 'Create new project successfully');
                         console.log(result.msg);
-                    }else {
+                    } else {
                         req.flash('error', 'Create new project fail');
-                
                     }
                     res.redirect('/project/management');
-                })
-              
+                });
             })
             .catch((err) => {
                 console.log(err);

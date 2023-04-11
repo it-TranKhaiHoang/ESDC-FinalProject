@@ -32,10 +32,16 @@ const TaskController = {
         };
         TaskService.create(task)
             .then((t) => {
-                //const ObjectId = mongoose.Types.ObjectId;
-                req.flash('success', 'Create new task successfully');
-                // console.log({ author: new ObjectId(req.session.id), task: t._id, body: 'Create new task' });
-                res.redirect(`/project/${id}`);
+                const user = req.session.user;
+                LogService.create({ author: user.id, task: t._id, body: 'Create new task' })
+                    .then(() => {
+                        req.flash('success', 'Create new task successfully');
+                        res.redirect(`/project/${id}`);
+                    })
+                    .catch((err) => {
+                        req.flash('error', 'Create new log fail');
+                        res.redirect(`/project/${id}`);
+                    });
             })
             .catch((err) => {
                 req.flash('error', 'Create new task fail');
@@ -88,8 +94,30 @@ const TaskController = {
                 return res.redirect(`/project/${req.session.projectID}`);
             });
     },
-    getProgressing: (req, res, next) => {},
-    getPending: (req, res, next) => {},
+    getProgressing: (req, res, next) => {
+        const id = req.params.id;
+        TaskService.update(id.split(' ')[0], { status: 'progressing' })
+            .then((task) => {
+                req.flash('success', 'Update status successful');
+                return res.redirect(`/task/list`);
+            })
+            .catch(() => {
+                req.flash('error', 'Update status failed');
+                return res.redirect(`/task/list`);
+            });
+    },
+    getPending: (req, res, next) => {
+        const id = req.params.id;
+        TaskService.update(id.split(' ')[0], { status: 'pending' })
+            .then((task) => {
+                req.flash('success', 'Update status successful');
+                return res.redirect(`/task/list`);
+            })
+            .catch(() => {
+                req.flash('error', 'Update status failed');
+                return res.redirect(`/task/list`);
+            });
+    },
     getCancel: (req, res, next) => {
         TaskService.update(req.params.id, { status: 'cancel' })
             .then((task) => {
@@ -100,6 +128,45 @@ const TaskController = {
                 req.flash('error', 'Update status failed');
                 return res.redirect(`/project/${req.session.projectID}`);
             });
+    },
+    getTaskByMember: (req, res, next) => {
+        const error = req.flash('error');
+        const success = req.flash('success');
+        const user = req.session.user;
+        TaskService.getList({ members: user.id }, {}, {}, 'members').then((tasks) => {
+            let todoTask = [];
+            let progressTask = [];
+            let doneTask = [];
+            tasks.forEach((item) => {
+                const task = {
+                    id: item._id,
+                    name: item.name,
+                    status: item.status,
+                    description: item.description,
+                    members: item.members,
+                    start_date: item.start_date,
+                    end_date: item.end_date,
+                    attachments: item.attachments,
+                    comments: item.comments,
+                    logs: item.logs,
+                };
+                if (task.status == 'todo') todoTask.push(task);
+                else if (task.status == 'progressing') progressTask.push(task);
+                else if (task.status == 'pending') doneTask.push(task);
+            });
+            res.render('pages/memberTasks', {
+                layout: 'admin',
+                page: 'Task list',
+                success,
+                error,
+                todoTask,
+                progressTask,
+                doneTask,
+                email: req.session.email,
+                fullname: req.session.fullname,
+                position: req.session.position,
+            });
+        });
     },
 };
 

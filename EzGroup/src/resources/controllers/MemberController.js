@@ -25,11 +25,17 @@ const MemberController = {
                                     req.flash('error', 'Incorrect Password');
                                     res.redirect('/login');
                                 }
+                                req.session.user = {
+                                    id: user._id,
+                                    email: user.email,
+                                    position: user.position,
+                                    fullname: user.fullname
+                                };
                                 const JWT_SECRET = process.env.JWT_SECRET;
                                 const token = jwt.sign({ email: user.email }, JWT_SECRET);
+                                req.session.id = user._id;
                                 req.session.email = user.email;
                                 req.session.position = user.position;
-                                req.session.id = user._id;
                                 req.session.token = token;
                                 req.session.fullname = user.fullname;
                                 req.flash('success', 'Login successful');

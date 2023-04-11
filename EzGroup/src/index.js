@@ -31,6 +31,14 @@ app.engine(
             inc: function (value, options) {
                 return parseInt(value) + 1;
             },
+            isLeader: function (val, options) {
+                if (val == 'leader')
+                    return options.fn(this)
+            },
+            isMember: function (val, options) {
+                if (val == 'member')
+                    return options.fn(this)
+            },
         },
     }),
 );

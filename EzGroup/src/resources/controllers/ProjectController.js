@@ -115,6 +115,33 @@ const ProjectController = {
             })
             .catch((err) => {});
     },
+    getListByMember: (req, res, next) => {
+        return ProjectService.getList({}, {}, {}, 'leader').then((projects) => {
+            let listProject = [];
+            projects.forEach((item) => {
+                const project = {
+                    id: item._id,
+                    name: item.name,
+                    start_date: moment(item.start_date).format('LLLL'),
+                    end_date: moment(item.end_date).format('LLLL'),
+                    status: item.status,
+                    leader_fullname: item.leader.fullname,
+                    leader_email: item.leader.email,
+                };
+                listProject.push(project);
+            });
+            res.render('pages/projectManagement', {
+                layout: 'admin',
+                page: 'Project management',
+                success,
+                error,
+                data: listProject,
+                email: req.session.email,
+                fullname: req.session.fullname,
+                position: req.session.position,
+            });
+        });
+    },
 };
 
 module.exports = ProjectController;

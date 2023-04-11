@@ -1,8 +1,8 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const CommentController = require("../controllers/CommentController");
+const CommentController = require('../controllers/CommentController');
+const auth = require('../auth/auth');
 
-router.get("/list", CommentController.getListCommentByProject);
-
+router.get('/list', auth, CommentController.getListCommentByProject);
 
 module.exports = router;

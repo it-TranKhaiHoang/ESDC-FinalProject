@@ -5,8 +5,6 @@ const Project = new Schema(
     {
         leader: { type: Schema.Types.ObjectId, ref: 'Member' },
         name: { type: String, required: true },
-        start_date: { type: Date, required: true },
-        end_date: { type: Date, required: true },
         status: { type: String, required: true },
     },
     {

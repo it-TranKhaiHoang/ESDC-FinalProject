@@ -33,8 +33,8 @@ const ProjectController = {
         });
     },
     postCreateProject: (req, res, next) => {
-        const { leader, name, start_date, end_date } = req.body;
-        const project = { leader, name, start_date, end_date, status: 'created' };
+        const { leader, name } = req.body;
+        const project = { leader, name, status: 'created' };
         ProjectService.create(project)
             .then(() => {
                 req.flash('success', 'Create new project successfully');

@@ -34,6 +34,7 @@ const TaskController = {
         };
         TaskService.create(task)
             .then((t) => {
+
                 const user = req.session.user;
                 LogService.create({ author: user.id, task: t._id, body: 'Create new task' })
                     .then(() => {

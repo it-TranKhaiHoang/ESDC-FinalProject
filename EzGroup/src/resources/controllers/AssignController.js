@@ -32,7 +32,7 @@ const AssignController = {
                                 return res.redirect(`/task/list`);
                             })
                             .catch((err) => {
-                                req.flash('error', 'Create new log failed ' + err);
+                                req.flash('error', 'Create new assign failed ' + err);
                                 return res.redirect(`/task/list`);
                             });
                     })

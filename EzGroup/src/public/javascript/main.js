@@ -109,7 +109,8 @@ function taskClick(id) {
                     `;
                 });
                 if (data.status == 'pending')
-                    btn += `<a href="/task/complete/${data._id} type="button" class="btn btn-success">Accept</a>`;
+                    btn += `<a href="/task/complete/${data._id} type="button" class="btn btn-success">Accept</a>
+                    <a href="/task/unqualified/${data._id} type="button" class="btn btn-warning">Unqualified</a>`;
                 info.innerHTML = `
                 <h4>${data.name}</h4>
                 <div class="link-issue my-3">
@@ -192,8 +193,7 @@ function MemberTaskClick(id) {
                 });
                 let attachBtn = '';
                 if (data.status == 'progressing')
-                    attachBtn =
-                        '<button data-mdb-toggle="modal" data-mdb-target="#addAttach" class="btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>';
+                    attachBtn = `<button data-name="${data.name}" data-id="${id}" data-mdb-toggle="modal" data-mdb-target="#addAttach" class="btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>`;
                 if (data.status == 'todo')
                     btn = `<a href="/task/progressing/${id} type="button" class="btn btn-info">Progress</a>`;
                 if (data.status == 'progressing')
@@ -220,5 +220,11 @@ function MemberTaskClick(id) {
         error: function (xhr, textStatus, errorThrown) {
             console.log('Error in Operation');
         },
+    });
+    $('#addAttach').on('show.bs.modal', function (e) {
+        let name = $(e.relatedTarget).data('name');
+        $(this).find('#TaskName').val(name);
+        let id = $(e.relatedTarget).data('id');
+        $(this).find('#TaskID').val(id);
     });
 }

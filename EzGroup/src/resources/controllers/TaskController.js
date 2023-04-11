@@ -91,10 +91,19 @@ const TaskController = {
         });
     },
     getComplete: (req, res, next) => {
-        TaskService.update(req.params.id, { status: 'complete' })
+        const id = req.params.id;
+        TaskService.update(id.split(' ')[0], { status: 'complete' })
             .then((task) => {
-                req.flash('success', 'Update status successful');
-                return res.redirect(`/project/${req.session.projectID}`);
+                const user = req.session.user;
+                LogService.create({ author: user.id, task: task._id, body: 'Complete task' })
+                    .then(() => {
+                        req.flash('success', 'Update status successful');
+                        return res.redirect(`/project/${req.session.projectID}`);
+                    })
+                    .catch((err) => {
+                        req.flash('error', 'Create new log fail');
+                        res.redirect(`/project/${req.session.projectID}`);
+                    });
             })
             .catch(() => {
                 req.flash('error', 'Update status failed');
@@ -105,8 +114,16 @@ const TaskController = {
         const id = req.params.id;
         TaskService.update(id.split(' ')[0], { status: 'progressing' })
             .then((task) => {
-                req.flash('success', 'Update status successful');
-                return res.redirect(`/task/list`);
+                const user = req.session.user;
+                LogService.create({ author: user.id, task: task._id, body: 'Progressing task' })
+                    .then(() => {
+                        req.flash('success', 'Update status successful');
+                        return res.redirect(`/task/list`);
+                    })
+                    .catch((err) => {
+                        req.flash('error', 'Create new log failed');
+                        return res.redirect(`/task/list`);
+                    });
             })
             .catch(() => {
                 req.flash('error', 'Update status failed');
@@ -117,19 +134,56 @@ const TaskController = {
         const id = req.params.id;
         TaskService.update(id.split(' ')[0], { status: 'pending' })
             .then((task) => {
-                req.flash('success', 'Update status successful');
-                return res.redirect(`/task/list`);
+                const user = req.session.user;
+                LogService.create({ author: user.id, task: task._id, body: 'Submit task' })
+                    .then(() => {
+                        req.flash('success', 'Update status successful');
+                        return res.redirect(`/task/list`);
+                    })
+                    .catch((err) => {
+                        req.flash('error', 'Create new log failed');
+                        return res.redirect(`/task/list`);
+                    });
             })
             .catch(() => {
                 req.flash('error', 'Update status failed');
                 return res.redirect(`/task/list`);
             });
     },
-    getCancel: (req, res, next) => {
-        TaskService.update(req.params.id, { status: 'cancel' })
+    getUnqualified: (req, res, next) => {
+        const id = req.params.id;
+        TaskService.update(id.split(' ')[0], { status: 'progressing' })
             .then((task) => {
-                req.flash('success', 'Update status successful');
+                const user = req.session.user;
+                LogService.create({ author: user.id, task: task._id, body: 'Submit task' })
+                    .then(() => {
+                        req.flash('success', 'Update status successful');
+                        return res.redirect(`/project/${req.session.projectID}`);
+                    })
+                    .catch((err) => {
+                        req.flash('error', 'Create new log failed');
+                        return res.redirect(`/project/${req.session.projectID}`);
+                    });
+            })
+            .catch(() => {
+                req.flash('error', 'Update status failed');
                 return res.redirect(`/project/${req.session.projectID}`);
+            });
+    },
+    getCancel: (req, res, next) => {
+        const id = req.params.id;
+        TaskService.update(id.split(' ')[0], { status: 'cancel' })
+            .then((task) => {
+                const user = req.session.user;
+                LogService.create({ author: user.id, task: task._id, body: 'Cancel task' })
+                    .then(() => {
+                        req.flash('success', 'Update status successful');
+                        return res.redirect(`/project/${req.session.projectID}`);
+                    })
+                    .catch((err) => {
+                        req.flash('error', 'Create new log fail');
+                        res.redirect(`/project/${req.session.projectID}`);
+                    });
             })
             .catch(() => {
                 req.flash('error', 'Update status failed');

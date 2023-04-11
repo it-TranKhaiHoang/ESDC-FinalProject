@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const AssignController = require('../controllers/AssignController');
-const upload = require('../middleware/multer');
+const { uploadAssign } = require('../middleware/multer');
 
-router.post('/create', upload.single('file'), AssignController.postCreateAssign);
-router.get('/create', (req, res) => {
-    res.json('Hello');
-});
+router.post('/create', uploadAssign.array('files'), AssignController.postCreateAssign);
+
 module.exports = router;

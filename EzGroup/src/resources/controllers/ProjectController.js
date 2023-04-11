@@ -92,7 +92,7 @@ const ProjectController = {
                                 logs: item.logs,
                             };
                             if (task.status == 'todo') todoTask.push(task);
-                            else if (task.status == 'progressing') progressTask.push(task);
+                            else if (task.status == 'progressing' || task.status == 'pending') progressTask.push(task);
                             else if (task.status == 'complete') doneTask.push(task);
                         });
                         req.session.projectID = project._id;

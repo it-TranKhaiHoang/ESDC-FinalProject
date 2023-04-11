@@ -289,54 +289,24 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addAttachLabel">Create task</h5>
+            <h5 class="modal-title" id="addAttachLabel">Add attachment</h5>
             <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form method='post' action='/task/create' enctype="multipart/form-data">
-              <!-- Text input -->
-              <!-- Text input -->
-              <div class="mb-4">
-                <label for="exampleFormControlInput1" class="form-label">Task name</label>
-                <input type="text" class="form-control d-none" name="id" value="{{id}}" id="" placeholder="" required>
-                <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="" required>
-              </div>
-              <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class='row mb-4'>
-                <div class='col'>
-                  <div class='form-group'>
-                    <label for='startDate' class='control-label'>Start Date</label>
-                    <input id='startDate' name='start_date' class='form-control' type='date' required />
-                  </div>
-                </div>
-                <div class='col'>
-                  <div class='form-group'>
-                    <label for='endDate' class='control-label'>End Date</label>
-                    <input id='endDate' name='end_date' class='form-control' type='date' required />
-                  </div>
-                </div>
-              </div>
-              <!-- Text input -->
-              <div class='form-outline mb-4'>
-                <label for='AssigneeDone' class='control-label'>Choose Members:</label>
-                <select name='leader' class='custom-select' id='AssigneeDone'>
-                  <option selected>Open this select member</option>
-                  <option value='1'>One</option>
-                  <option value='2'>Two</option>
-                  <option value='3'>Three</option>
-                </select>
-              </div>
+            <form method='post' action='/assign/create' enctype="multipart/form-data">
               <div class="mb-4">
                 <label for="formFile" class="control-label">Attachment:</label>
                 <input class="form-control" type="file" name="files" id="formFile" multiple>
-                <input class="form-control d-none" type="text" value="done" name="status" id="formFile">
+                <input  class="form-control d-none" type="text" name="name" id="TaskName">
+                <input  class="form-control d-none" type="text" name="id" id="TaskID">
+
               </div>
               <div class="mb-4">
-                <label for="description" class="control-label">Task description:</label>
+                <label for="description" class="control-label">Attachment description:</label>
                 <textarea class="form-control" name="description" id="description" rows="3"></textarea>
               </div>
               <!-- Submit button -->
-              <button type='submit' class='btn btn-primary btn-block mb-4'>Create</button>
+              <button type='submit' class='btn btn-primary btn-block mb-4'>Add</button>
             </form>
           </div>
           <div class="modal-footer">

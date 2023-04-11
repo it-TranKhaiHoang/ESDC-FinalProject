@@ -142,7 +142,7 @@
                   <div class="list-title px-3 py-1 mb-2">Done</div>
                   {{#each doneTask}}
                     <div class="task-single" onclick="taskClick('{{id}}')">
-                        <img src="https://picsum.photos/200/200" alt="">
+                        {{!-- <img src="https://picsum.photos/200/200" alt=""> --}}
                         <div class="task-body px-2 py-2">
                             <div class="task-cap mb-2">
                                 {{name}}
@@ -202,7 +202,7 @@
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar" />
                     <i class="fa fa-caret-down"></i>
                     </span> --}}
-                    <button data-author="{{uid}}" class="btnComment" onclick="submit_comment()" type="button" value="1">Post</button>
+                    <button data-fullname="{{fullname}}" data-email="{{email}}" data-author="{{uid}}" class="btnComment" onclick="submit_comment()" type="button" value="1">Post</button>
                   </div>
                   </div>
                 </div>

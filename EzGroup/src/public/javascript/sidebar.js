@@ -31,7 +31,9 @@ $(".sidebar-dropdown > a").click(function() {
   function submit_comment(){
     var body = $('.commentar').val();
     var author = $('.btnComment').data('author');
-    
+    var email = $('.btnComment').data('email');
+    var fullname = $('.btnComment').data('fullname');
+
     $.ajax({
       url: '/comment/post',
       method: 'POST',
@@ -48,13 +50,13 @@ $(".sidebar-dropdown > a").click(function() {
     el.className = "box_result row";
     el.innerHTML =
       '<div class=\"avatar_comment col-md-1\">'+
-        '<img src=\"https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg\" alt=\"avatar\"/>'+
+        `<img src=\"https://www.gravatar.com/avatar/${email}?s=200&r=pg&d=retro\" alt=\"avatar\"/>`+
       '</div>'+
       '<div class=\"result_comment col-md-11\">'+
-      '<h4>Anonimous</h4>'+
+      `<h4>${fullname}</h4>`+
       '<p>'+ body +'</p>'+
       '<div class=\"tools_comment\">'+
-      '<a class=\"like\" href=\"#\">Like</a><span aria-hidden=\"true\"> · </span>'+
+      '<a class=\"like\" href=\"#\">Like</a><span aria-hid\"true\"> · </span>'+
       '<i class=\"fa fa-thumbs-o-up\"></i> <span class=\"count\">0</span>'+
       '<span aria-hidden=\"true\"> · </span>'+
       '<a class=\"replay\" href=\"#\">Reply</a><span aria-hidden=\"true\"> · </span>'+
@@ -75,7 +77,7 @@ $(".sidebar-dropdown > a").click(function() {
       
       if (x === "Like") {
         $current.closest('div').find('.like').text('Unlike');
-        $current.closest('div').find('.count').text(y + 1);
+        $current.closestden=('div').find('.count').text(y + 1);
       } else if (x === "Unlike"){
         $current.closest('div').find('.like').text('Like');
         $current.closest('div').find('.count').text(y - 1);

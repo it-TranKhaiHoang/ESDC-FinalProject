@@ -2,7 +2,10 @@ const ProjectService = require('../services/ProjectService');
 const TaskService = require('../services/TaskService');
 const CommentService = require('../services/CommentService')
 const moment = require('moment');
+const API_URL = process.env.API_URL || 'http://localhost:5000/api/'
 const md5 = require('md5');
+const fetch = require('node-fetch');
+const MemberService = require('../services/MemberService');
 const ProjectController = {
     getProjectManagement: (req, res, next) => {
         const error = req.flash('error') || '';
@@ -33,15 +36,43 @@ const ProjectController = {
             });
         });
     },
-    postCreateProject: (req, res, next) => {
+    postCreateProject: async (req, res, next) => {
         const { leader, name } = req.body;
         const project = { leader, name, status: 'created' };
         ProjectService.create(project)
-            .then(() => {
-                req.flash('success', 'Create new project successfully');
-                res.redirect('/project/management');
+            .then(async (project) => {
+
+                let user = await MemberService.getOneByID(leader);
+                let mail_option = {
+                    receiver: user.email,
+                    subject: 'Project Initialization',
+                    html: `<p>You just have become leader of an project</p>
+                          <p>Link: <a href="http://localhost:8080/project/${project._id}" /></p>    
+                    `
+                }
+                let body = JSON.stringify(mail_option);
+                req.mail_body = body;
+                await fetch(API_URL + 'mail/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json'},
+                    body: body,
+                })
+                .then(async result => {
+                    result = await result.json();
+                    console.log(result);
+                    if(result.success) {
+                        req.flash('success', 'Create new project successfully');
+                        console.log(result.msg);
+                    }else {
+                        req.flash('error', 'Create new project fail');
+                
+                    }
+                    res.redirect('/project/management');
+                })
+              
             })
             .catch((err) => {
+                console.log(err);
                 req.flash('error', 'Create new project fail');
                 res.redirect('/project/management');
             });
@@ -109,6 +140,7 @@ const ProjectController = {
                             todoTask,
                             progressTask,
                             doneTask,
+                            uid: req.session.user.id,
                             email: req.session.email,
                             fullname: req.session.fullname,
                             position: req.session.position,

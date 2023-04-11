@@ -212,8 +212,8 @@ const TaskController = {
                     logs: item.logs,
                 };
                 if (task.status == 'todo') todoTask.push(task);
-                else if (task.status == 'progressing') progressTask.push(task);
-                else if (task.status == 'pending') doneTask.push(task);
+                else if (task.status == 'progressing' || task.status == 'pending') progressTask.push(task);
+                else if (task.status == 'done') doneTask.push(task);
             });
             res.render('pages/memberTasks', {
                 layout: 'admin',

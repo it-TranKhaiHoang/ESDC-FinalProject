@@ -195,7 +195,7 @@ function MemberTaskClick(id) {
                 if (data.status == 'progressing')
                     attachBtn = `<button data-name="${data.name}" data-id="${id}" data-mdb-toggle="modal" data-mdb-target="#addAttach" class="btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>`;
                 if (data.status == 'todo')
-                    btn = `<a href="/task/progressing/${id} type="button" class="btn btn-info">Progress</a>`;
+                    btn = `<a href="/task/progressing/${id} type="button" class="btn btn-info">Apply</a>`;
                 if (data.status == 'progressing')
                     btn = `<a href="/task/pending/${id} type="button" class="btn btn-success">Submit</a>`;
                 info.innerHTML = `

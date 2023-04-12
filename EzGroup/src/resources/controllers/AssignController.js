@@ -9,7 +9,7 @@ const AssignController = {
         const { id, description } = req.body;
         if (!files) {
             req.flash('error', 'Please choose files');
-            return res.redirect(`/task/list}`);
+            return res.redirect(`/project/${req.session.projectID}}`);
         }
         let attachments = [];
         files.map((f) => {
@@ -29,21 +29,21 @@ const AssignController = {
                         LogService.create({ author: user.id, task: id, body: description })
                             .then(() => {
                                 req.flash('success', 'Add attachments successful');
-                                return res.redirect(`/task/list`);
+                                return res.redirect(`/project/${req.session.projectID}`);
                             })
                             .catch((err) => {
                                 req.flash('error', 'Create new assign failed ' + err);
-                                return res.redirect(`/task/list`);
+                                return res.redirect(`/project/${req.session.projectID}`);
                             });
                     })
                     .catch((err) => {
                         req.flash('error', 'Create new assign failed ' + err);
-                        return res.redirect(`/task/list`);
+                        return res.redirect(`/project/${req.session.projectID}`);
                     });
             })
             .catch((err) => {
                 req.flash('error', 'Create new assign failed ' + err);
-                return res.redirect(`/task/list`);
+                return res.redirect(`/project/${req.session.projectID}`);
             });
     },
 };

@@ -76,7 +76,7 @@ function fillOption() {
     });
 }
 
-function taskClick(id) {
+function taskClick(id, uid) {
     $('#task-info').show();
     $.ajax({
         url: `/task/${id}`,
@@ -115,7 +115,7 @@ function taskClick(id) {
                 info.innerHTML = `
                 <h4>${data.name}</h4>
                 <div class="link-issue my-3">
-                    <button class=" btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>
+                <button data-name="${data.name}" data-id="${id}" data-mdb-toggle="modal" data-mdb-target="#addAttach" class="btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>
                     <button type="button" class="btn btn-primary" data-id="${id}" data-mdb-toggle="modal" data-mdb-target="#staticBackdrop">
                         <i class="fa fa-plus" aria-hidden="true"></i> Add member
                     </button>
@@ -143,6 +143,12 @@ function taskClick(id) {
         let id = $(e.relatedTarget).data('id');
         $(this).find('#taskID').val(id);
     });
+    $('#addAttach').on('show.bs.modal', function (e) {
+        let name = $(e.relatedTarget).data('name');
+        $(this).find('#TaskName').val(name);
+        let id = $(e.relatedTarget).data('id');
+        $(this).find('#TaskID').val(id);
+    });
 }
 
 function getNumberOfProject() {
@@ -164,7 +170,7 @@ function getNumberOfProject() {
     });
 }
 
-function MemberTaskClick(id) {
+function MemberTaskClick(id, uid, isTask) {
     $('#task-info').show();
     $.ajax({
         url: `/task/${id}`,
@@ -174,21 +180,21 @@ function MemberTaskClick(id) {
             if (!data) {
                 console.log('err');
             } else {
-                console.log(data);
-                const info = document.getElementById('task-info');
-                const countAttachments = data.attachments.length;
-                let taskSingle = ``;
-                let btn = ``;
-                let attachments = data.attachments;
-                attachments.forEach((item) => {
-                    const fileName = item.split('/').pop();
-                    const extension = item.split('.').pop();
-                    let path = '/img/icon/file.png';
-                    if (extension == 'jpg' || extension == 'png' || extension == 'icon' || extension == 'svg')
-                        path = item;
-                    else if (extension == 'pdf') path = '/img/icon/pdf.png';
-                    else if (extension == 'doc' || extension == 'docx') path = '/img/icon/doc.png';
-                    taskSingle += `
+                if (isTask) {
+                    const info = document.getElementById('task-info');
+                    const countAttachments = data.attachments.length;
+                    let taskSingle = ``;
+                    let btn = ``;
+                    let attachments = data.attachments;
+                    attachments.forEach((item) => {
+                        const fileName = item.split('/').pop();
+                        const extension = item.split('.').pop();
+                        let path = '/img/icon/file.png';
+                        if (extension == 'jpg' || extension == 'png' || extension == 'icon' || extension == 'svg')
+                            path = item;
+                        else if (extension == 'pdf') path = '/img/icon/pdf.png';
+                        else if (extension == 'doc' || extension == 'docx') path = '/img/icon/doc.png';
+                        taskSingle += `
                     <a href="${item}" target="_blank" class="task-single">
                         <img src="${path}" alt="">
                         <div class="attach-info px-2 py-2">
@@ -196,15 +202,15 @@ function MemberTaskClick(id) {
                         </div>
                     </a>
                     `;
-                });
-                let attachBtn = '';
-                if (data.status == 'progressing')
-                    attachBtn = `<button data-name="${data.name}" data-id="${id}" data-mdb-toggle="modal" data-mdb-target="#addAttach" class="btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>`;
-                if (data.status == 'todo')
-                    btn = `<a href="/task/progressing/${id} type="button" class="btn btn-info">Apply</a>`;
-                if (data.status == 'progressing')
-                    btn = `<a href="/task/pending/${id} type="button" class="btn btn-success">Submit</a>`;
-                info.innerHTML = `
+                    });
+                    let attachBtn = '';
+                    if (data.status == 'progressing')
+                        attachBtn = `<button data-name="${data.name}" data-id="${id}" data-mdb-toggle="modal" data-mdb-target="#addAttach" class="btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>`;
+                    if (data.status == 'todo')
+                        btn = `<a href="/task/progressing/${id} type="button" class="btn btn-info">Apply</a>`;
+                    if (data.status == 'progressing')
+                        btn = `<a href="/task/pending/${id} type="button" class="btn btn-success">Submit</a>`;
+                    info.innerHTML = `
                 <h4>${data.name}</h4>
                 <div class="link-issue my-3">
                     ${attachBtn}
@@ -221,6 +227,7 @@ function MemberTaskClick(id) {
                 </div>
                 ${btn}
                 `;
+                }
             }
         },
         error: function (xhr, textStatus, errorThrown) {

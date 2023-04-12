@@ -121,16 +121,16 @@ const TaskController = {
                 LogService.create({ author: user.id, task: task._id, body: 'Progressing task' })
                     .then(() => {
                         req.flash('success', 'Update status successful');
-                        return res.redirect(`/task/list`);
+                        return res.redirect(`/project/${req.session.projectID}`);
                     })
                     .catch((err) => {
                         req.flash('error', 'Create new log failed');
-                        return res.redirect(`/task/list`);
+                        return res.redirect(`/project/${req.session.projectID}`);
                     });
             })
             .catch(() => {
                 req.flash('error', 'Update status failed');
-                return res.redirect(`/task/list`);
+                return res.redirect(`/project/${req.session.projectID}`);
             });
     },
     getPending: (req, res, next) => {
@@ -141,16 +141,16 @@ const TaskController = {
                 LogService.create({ author: user.id, task: task._id, body: 'Submit task' })
                     .then(() => {
                         req.flash('success', 'Update status successful');
-                        return res.redirect(`/task/list`);
+                        return res.redirect(`/project/${req.session.projectID}`);
                     })
                     .catch((err) => {
                         req.flash('error', 'Create new log failed');
-                        return res.redirect(`/task/list`);
+                        return res.redirect(`/project/${req.session.projectID}`);
                     });
             })
             .catch(() => {
                 req.flash('error', 'Update status failed');
-                return res.redirect(`/task/list`);
+                return res.redirect(`/project/${req.session.projectID}`);
             });
     },
     getUnqualified: (req, res, next) => {

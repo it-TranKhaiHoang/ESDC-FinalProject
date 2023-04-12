@@ -88,7 +88,7 @@
             {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
             <div class="list-title px-3 py-1 mb-2">To do</div>
             {{#each todoTask}}
-            <div class="task-single hover-task" onclick="taskClick('{{id}}')">
+            <div class="task-single {{#if isMemberTask}} hover-task {{/if}} {{#isLeader position}} hover-task {{/isLeader}}" {{#isLeader position}} onclick="taskClick('{{_id}}','{{uid}}')" {{/isLeader}} {{#isMember position}} onclick="MemberTaskClick('{{_id}}','{{uid}}','{{isMemberTask}}')" {{/isMember}}>
                 {{!-- <img src="https://picsum.photos/200/200" alt=""> --}}
                 <div class="task-body px-2 py-2">
                     <div class="task-cap mb-2">
@@ -105,9 +105,11 @@
                 </div>
             </div>
             {{/each}}
+            {{#isLeader position}}
             <button data-mdb-toggle="modal" data-mdb-target="#createTaskToDo" class="btnAddTask px-3 py-1">
                <i class="fas fa-plus"></i> <span>Create Task</span>
             </button>
+            {{/isLeader }}
           </div>          
               </div>
               <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3  px-1 ml-2 mb-5">          
@@ -115,7 +117,7 @@
                   {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
                   <div class="list-title px-3 py-1 mb-2">On Progress</div>
                   {{#each progressTask}}
-                    <div class="task-single" onclick="taskClick('{{id}}')">
+                    <div class="task-single {{#if isMemberTask}} hover-task {{/if}} {{#isLeader position}} hover-task {{/isLeader}}"  {{#isLeader position}} onclick="taskClick('{{_id}}','{{uid}}')" {{/isLeader}} {{#isMember position}} onclick="MemberTaskClick('{{_id}}','{{uid}}','{{isMemberTask}}')" {{/isMember}}>
                         {{!-- <img src="https://picsum.photos/200/200" alt=""> --}}
                         <div class="task-body px-2 py-2">
                             <div class="task-cap mb-2">
@@ -141,7 +143,7 @@
                   {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
                   <div class="list-title px-3 py-1 mb-2">Done</div>
                   {{#each doneTask}}
-                    <div class="task-single" onclick="taskClick('{{id}}')">
+                    <div class="task-single {{#if isMemberTask}} hover-task {{/if}} {{#isLeader position}} hover-task {{/isLeader}}" {{#isLeader position}} onclick="taskClick('{{_id}}','{{uid}}')" {{/isLeader}} {{#isMember position}} onclick="MemberTaskClick('{{_id}}','{{uid}}','{{isMemberTask}}')" {{/isMember}}>
                         {{!-- <img src="https://picsum.photos/200/200" alt=""> --}}
                         <div class="task-body px-2 py-2">
                             <div class="task-cap mb-2">
@@ -271,9 +273,7 @@
                         </thead>
                         <tbody id="ListMember">
                             {{#if empty}}
-                            <td colspan="6">
-                                <p class="fw-bold mb-1">Không có món ăn / đồ uống nào</p>
-                            </td>
+                            
                             {{else}}
                             {{#each members}}
                             <tr>
@@ -490,6 +490,36 @@
               </div>
               <!-- Submit button -->
               <button type='submit' class='btn btn-primary btn-block mb-4'>Create</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="addAttach" tabindex="-1" data-mdb-backdrop='static' data-mdb-keyboard='false' aria-labelledby="addAttachLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addAttachLabel">Add attachment</h5>
+            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method='post' action='/assign/create' enctype="multipart/form-data">
+              <div class="mb-4">
+                <label for="formFile" class="control-label">Attachment:</label>
+                <input class="form-control" type="file" name="files" id="formFile" multiple>
+                <input  class="form-control d-none" type="text" name="name" id="TaskName">
+                <input  class="form-control d-none" type="text" name="id" id="TaskID">
+
+              </div>
+              <div class="mb-4">
+                <label for="description" class="control-label">Attachment description:</label>
+                <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+              </div>
+              <!-- Submit button -->
+              <button type='submit' class='btn btn-primary btn-block mb-4'>Add</button>
             </form>
           </div>
           <div class="modal-footer">

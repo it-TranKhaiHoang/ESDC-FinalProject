@@ -6,6 +6,7 @@ const API_URL = process.env.API_URL || 'http://localhost:5000/api/';
 const md5 = require('md5');
 const fetch = require('node-fetch');
 const MemberService = require('../services/MemberService');
+const { json } = require('body-parser');
 const ProjectController = {
     getProjectManagement: async (req, res, next) => {
         const error = req.flash('error') || '';
@@ -98,10 +99,11 @@ const ProjectController = {
                 res.status(500).json({ error: err });
             });
     },
-    getDetail: (req, res, next) => {
+    getDetail: async (req, res, next) => {
         const error = req.flash('error') || '';
         const success = req.flash('success') || '';
-        ProjectService.getOneByID(req.params.id)
+        const user = req.session.user || '';
+        await ProjectService.getOneByID(req.params.id)
             .then(async (project) => {
                 if (project) {
                     TaskService.getList({ project: project._id }, {}, {}, 'members').then(async (tasks) => {
@@ -110,31 +112,32 @@ const ProjectController = {
                         let doneTask = [];
                         let listMembersID = [];
                         tasks.forEach((item) => {
-                            const members = item.members;
-                            let listMembers = [];
-                            members.forEach((m) => {
-                                listMembersID.push(m._id);
-                                listMembers.push({
-                                    id: m._id,
-                                    fullname: m.fullname,
-                                    position: m.position,
-                                });
+                            let listMember = item.members;
+                            let isMemberTask;
+                            listMember.forEach((member) => {
+                                if (member._id == user.id) isMemberTask = true;
                             });
-                            const task = {
-                                id: item._id,
-                                name: item.name,
-                                status: item.status,
-                                description: item.description,
-                                members: listMembers,
-                                start_date: item.start_date,
-                                end_date: item.end_date,
-                                attachments: item.attachments,
-                                comments: item.comments,
-                                logs: item.logs,
-                            };
-                            if (task.status == 'todo') todoTask.push(task);
-                            else if (task.status == 'progressing' || task.status == 'pending') progressTask.push(task);
-                            else if (task.status == 'complete') doneTask.push(task);
+                            if (item.status == 'todo')
+                                todoTask.push({
+                                    ...item,
+                                    uid: user.id,
+                                    position: user.position,
+                                    isMemberTask: isMemberTask,
+                                });
+                            else if (item.status == 'progressing' || item.status == 'pending')
+                                progressTask.push({
+                                    ...item,
+                                    uid: user.id,
+                                    position: user.position,
+                                    isMemberTask: isMemberTask,
+                                });
+                            else if (item.status == 'complete')
+                                doneTask.push({
+                                    ...item,
+                                    uid: user.id,
+                                    position: user.position,
+                                    isMemberTask: isMemberTask,
+                                });
                         });
                         req.session.projectID = project._id;
                         let comments = await CommentService.getList({}, {}, { createdAt: -1 }, 'author');
@@ -143,16 +146,7 @@ const ProjectController = {
                             {},
                             {},
                         );
-                        let members = [];
-                        MemberNotInProject.forEach((m) => {
-                            members.push({
-                                id: m._id,
-                                fullname: m.fullname,
-                                position: m.position,
-                                email: m.email,
-                                status: m.status,
-                            });
-                        });
+                        //res.json({ todoTask, progressTask, doneTask });
                         res.render('pages/index', {
                             layout: 'admin',
                             project,
@@ -163,13 +157,13 @@ const ProjectController = {
                             todoTask,
                             progressTask,
                             doneTask,
-                            uid: req.session.user.id || '',
-                            email: req.session.email || '',
-                            fullname: req.session.fullname || '',
-                            position: req.session.position || '',
+                            uid: user.id || '',
+                            email: user.email || '',
+                            fullname: user.fullname || '',
+                            position: user.position || '',
                             comments,
                             comment_count: comments.length,
-                            members,
+                            members: MemberNotInProject,
                         });
                     });
                 }

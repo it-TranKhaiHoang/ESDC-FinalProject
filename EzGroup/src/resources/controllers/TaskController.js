@@ -3,7 +3,11 @@ const LogService = require('../services/LogService');
 const AssignService = require('../services/AssignService');
 const Assign = require('../models/Assign');
 const CommentService = require('../services/CommentService');
+const API_URL = process.env.API_URL || 'http://localhost:5000/api/';
+const MemberService = require('../services/MemberService');
+const fetch = require('node-fetch');
 const Task = require('../models/Task');
+const ProjectService = require('../services/ProjectService');
 const TaskController = {
     getCreateTask: (req, res, next) => {
         res.render('pages/createTask', { layout: 'admin' });
@@ -34,16 +38,37 @@ const TaskController = {
         };
         TaskService.create(task)
             .then((t) => {
-
                 const user = req.session.user;
                 LogService.create({ author: user.id, task: t._id, body: 'Create new task' })
                     .then(() => {
                         AssignService.create({ leader: leader, task: t._id, attachments: attachments })
-                            .then(() => {
+                            .then(async () => {
+                                let user = await MemberService.getOneByID(leader);
+                                
+                                let mail_option = {
+                                    receiver: user.email,
+                                    subject: `[${user.fullname}] Task Distributed`,
+                                    html: `<p>You just have been distributed task <strong>[${t.name}]</strong> by <strong>[${user.fullname}]</strong></p>
+                                        <p>Link: http://localhost:8080/project/${id}</p>    
+                                    `,
+                                };
+                                let body = JSON.stringify(mail_option);
+                                req.mail_body = body;
+
+                                fetch(API_URL + 'mail/send-email', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: body,
+                                })
+
                                 req.flash('success', 'Create new task successfully');
                                 res.redirect(`/project/${id}`);
+
+                                // req.flash('success', 'Create new task successfully');
+                                // res.redirect(`/project/${id}`);
                             })
                             .catch((err) => {
+                                console.log(err);
                                 req.flash('error', 'Create new assign fail');
                                 res.redirect(`/project/${id}`);
                             });
@@ -133,11 +158,29 @@ const TaskController = {
                 return res.redirect(`/project/${req.session.projectID}`);
             });
     },
-    getPending: (req, res, next) => {
+    getPending: async (req, res, next) => {
         const id = req.params.id;
         TaskService.update(id.split(' ')[0], { status: 'pending' })
-            .then((task) => {
+            .then(async (task) => {
                 const user = req.session.user;
+                let project = await ProjectService.getOneByID(task.project);
+                
+                let email = project.leader.email;
+                let mail_option = {
+                    receiver: email,
+                    subject: 'Task submission',
+                    html: `<p><strong>[${user.fullname}]</strong> just have marked as done task <strong>[${task.name}]</strong> from you</p>
+                          <p>Link: http://localhost:8080/project/${project._id}</p>    
+                    `,
+                };
+                let body = JSON.stringify(mail_option);
+                req.mail_body = body;
+                fetch(API_URL + 'mail/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: body,
+                })
+
                 LogService.create({ author: user.id, task: task._id, body: 'Submit task' })
                     .then(() => {
                         req.flash('success', 'Update status successful');

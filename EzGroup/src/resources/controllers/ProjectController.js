@@ -57,27 +57,20 @@ const ProjectController = {
                 let mail_option = {
                     receiver: user.email,
                     subject: 'Project Initialization',
-                    html: `<p>You just have become leader of an project</p>
+                    html: `<p>You just have become leader of project <strong>[${project.name}]<>/strong</p>
                           <p>Link: http://localhost:8080/project/${project._id}</p>    
                     `,
                 };
                 let body = JSON.stringify(mail_option);
                 req.mail_body = body;
-                await fetch(API_URL + 'mail/send-email', {
+                fetch(API_URL + 'mail/send-email', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: body,
-                }).then(async (result) => {
-                    result = await result.json();
-                    console.log(result);
-                    if (result.success) {
-                        req.flash('success', 'Create new project successfully');
-                        console.log(result.msg);
-                    } else {
-                        req.flash('error', 'Create new project fail');
-                    }
-                    res.redirect('/project/management');
-                });
+                })
+                
+                req.flash('success', 'Create new project successfully');
+                res.redirect('/project/management');
             })
             .catch((err) => {
                 console.log(err);

@@ -7,7 +7,7 @@ const ProjectService = {
     getList: async (condition, options, sortBy, populate) => {
         let skip = options.skip || 0;
         let limit = options.limit || 0;
-        return Project.find(condition).sort(sortBy).skip(skip).limit(limit).populate(populate);
+        return Project.find(condition).sort(sortBy).skip(skip).limit(limit).populate(populate).lean();
     },
     getOne: async (condition) => {
         return Project.findOne(condition);

@@ -7,7 +7,7 @@ const MemberService = {
     getList: async (condition, options, sortBy) => {
         let skip = options.skip || 0;
         let limit = options.limit || 0;
-        return Member.find(condition).sort(sortBy).skip(skip).limit(limit);
+        return Member.find(condition).sort(sortBy).skip(skip).limit(limit).lean();
     },
     getOne: async (condition) => {
         return Member.findOne(condition);

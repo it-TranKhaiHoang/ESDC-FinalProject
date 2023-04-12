@@ -13,7 +13,7 @@ const ProjectService = {
         return Project.findOne(condition);
     },
     getOneByID: async (id) => {
-        return Project.findById(id);
+        return Project.findById(id).populate('leader').lean();
     },
     update: async (id, data) => {
         return Project.findByIdAndUpdate(id, { $set: data });

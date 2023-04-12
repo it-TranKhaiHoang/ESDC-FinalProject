@@ -7,31 +7,44 @@ const md5 = require('md5');
 const fetch = require('node-fetch');
 const MemberService = require('../services/MemberService');
 const ProjectController = {
-    getProjectManagement: (req, res, next) => {
+    getProjectManagement: async (req, res, next) => {
         const error = req.flash('error') || '';
         const success = req.flash('success') || '';
-        return ProjectService.getList({}, {}, {}, 'leader').then((projects) => {
-            let listProject = [];
-            projects.forEach((item) => {
-                const project = {
-                    id: item._id,
-                    name: item.name,
-                    start_date: moment(item.start_date).format('LLLL'),
-                    end_date: moment(item.end_date).format('LLLL'),
-                    status: item.status,
-                };
-                listProject.push(project);
+        const user = req.session.user || '';
+        let listProjects = [];
+        if (user.position != 'leader') {
+            let tasks = await TaskService.getList(
+                {},
+                {},
+                {},
+                {
+                    path: 'project',
+                    populate: {
+                        path: 'leader',
+                    },
+                },
+            );
+            tasks.forEach((task) => {
+                let listMember = task.members;
+                let isIncluded = listProjects.some((obj) => JSON.stringify(obj) === JSON.stringify(task.project));
+                listMember.forEach((member) => {
+                    if (member == user.id && !isIncluded) {
+                        listProjects.push(task.project);
+                    }
+                });
             });
-            res.render('pages/projectManagement', {
-                layout: 'admin',
-                page: 'Project management',
-                success,
-                error,
-                data: listProject,
-                email: req.session.email || '',
-                fullname: req.session.fullname || '',
-                position: req.session.position || '',
-            });
+        } else {
+            listProjects = await ProjectService.getList({}, {}, {}, 'leader');
+        }
+        res.render('pages/projectManagement', {
+            layout: 'admin',
+            page: 'Project management',
+            success,
+            error,
+            data: listProjects,
+            email: user.email || '',
+            fullname: user.fullname || '',
+            position: user.position || '',
         });
     },
     postCreateProject: async (req, res, next) => {

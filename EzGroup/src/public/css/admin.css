@@ -312,6 +312,6 @@ input:hover {
     vertical-align: middle;
     border-radius: 2px;
 }
-.task-single:hover {
+.hover-task:hover {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }

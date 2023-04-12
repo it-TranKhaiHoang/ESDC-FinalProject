@@ -2,9 +2,9 @@
       <hr>
       <input class="input" name="text" placeholder="Search..." type="search">
       <br>
-      
+      <a href="/project/management" type="button" class="btn btn-secondary btn-rounded mt-5" data-mdb-ripple-color="dark"> <i class="fa-solid fa-angle-left"></i> Project management</a>
       {{#if success}}
-          <div class='alert alert-success d-flex align-items-center' role='alert'>
+          <div class='alert alert-success d-flex align-items-center mt-5' role='alert'>
               <div>
                   <i class='fa-regular fa-circle-check' style='color: #307722;'></i>
                   {{success}}
@@ -88,7 +88,7 @@
             {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
             <div class="list-title px-3 py-1 mb-2">To do</div>
             {{#each todoTask}}
-            <div class="task-single" onclick="taskClick('{{id}}')">
+            <div class="task-single hover-task" onclick="taskClick('{{id}}')">
                 {{!-- <img src="https://picsum.photos/200/200" alt=""> --}}
                 <div class="task-body px-2 py-2">
                     <div class="task-cap mb-2">

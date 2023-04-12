@@ -86,6 +86,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Leader</th>
+                        <th>Members</th>
                         <th>Create at</th>
                         <th>Update at</th>
                         <th>Status</th>
@@ -114,6 +115,16 @@
                                             <p class='fw-bold mb-1'>{{leader.fullname}}</p>
                                         </div>
                                     </div>
+                                </td>
+                                <td>
+                                    <div class='d-flex align-items-center'>
+                                        {{#each members}}
+                                        <div class='ms-3'>
+                                            <p class='fw-bold mb-1'>{{fullname}}</p>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    
                                 </td>
                                 <td>
                                     {{formatDate createdAt}}

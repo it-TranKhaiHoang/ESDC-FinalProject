@@ -6,7 +6,6 @@ const API_URL = process.env.API_URL || 'http://localhost:5000/api/';
 const md5 = require('md5');
 const fetch = require('node-fetch');
 const MemberService = require('../services/MemberService');
-const { json } = require('body-parser');
 const ProjectController = {
     getProjectManagement: async (req, res, next) => {
         const error = req.flash('error') || '';
@@ -67,8 +66,8 @@ const ProjectController = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: body,
-                })
-                
+                });
+
                 req.flash('success', 'Create new project successfully');
                 res.redirect('/project/management');
             })
@@ -134,12 +133,13 @@ const ProjectController = {
                         });
                         req.session.projectID = project._id;
                         let comments = await CommentService.getList({}, {}, { createdAt: -1 }, 'author');
+
                         let MemberNotInProject = await MemberService.getList(
                             { _id: { $nin: listMembersID }, position: 'member' },
                             {},
                             {},
                         );
-                        //res.json({ todoTask, progressTask, doneTask });
+
                         res.render('pages/index', {
                             layout: 'admin',
                             project,

@@ -10,10 +10,10 @@ const MemberService = {
         return Member.find(condition).sort(sortBy).skip(skip).limit(limit).lean();
     },
     getOne: async (condition) => {
-        return Member.findOne(condition);
+        return Member.findOne(condition).lean();
     },
     getOneByID: async (id) => {
-        return Member.findById(id);
+        return Member.findById(id).lean();
     },
     update: async (id, data) => {
         return Member.findByIdAndUpdate(id, { $set: data });

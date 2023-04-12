@@ -149,6 +149,52 @@ function taskClick(id, uid) {
         let id = $(e.relatedTarget).data('id');
         $(this).find('#TaskID').val(id);
     });
+    $.ajax({
+        url: `/task/getOtherMember/${id}`,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data, textStatus, xhr) {
+            if (!data) {
+                console.log('err');
+            } else {
+                const listMember = document.getElementById('ListMember');
+                console.log(data);
+                listMember.innerHTML = ``;
+                data.forEach((item) => {
+                    listMember.innerHTML += `
+                    <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://www.gravatar.com/avatar/${item.email}?s=200&r=pg&d=retro" class="rounded-circle" alt=""
+                                            style="width: 45px; height: 45px" />
+                                        <div class="ms-3">
+                                            <p class="fw-bold mb-1">${item.fullname}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    ${item.email}
+                                </td>
+                                <td>
+                                    <div class="row mb-1">
+                                        <span class="badge badge-success rounded-pill d-inline col-8">${item.status}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="/task/addMember/${id}/${item._id}"
+                                        class="btn btn-link btn-rounded btn-sm fw-bold">
+                                        Add
+                                    </a>
+                                </td>
+                            </tr>
+                    `;
+                });
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.log('Error in Operation');
+        },
+    });
 }
 
 function getNumberOfProject() {

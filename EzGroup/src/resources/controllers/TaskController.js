@@ -7,6 +7,7 @@ const API_URL = process.env.API_URL || 'http://localhost:5000/api/';
 const MemberService = require('../services/MemberService');
 const fetch = require('node-fetch');
 const Task = require('../models/Task');
+const Member = require('../models/Member');
 const ProjectService = require('../services/ProjectService');
 const TaskController = {
     getCreateTask: (req, res, next) => {
@@ -44,7 +45,7 @@ const TaskController = {
                         AssignService.create({ leader: leader, task: t._id, attachments: attachments })
                             .then(async () => {
                                 let user = await MemberService.getOneByID(leader);
-                                
+
                                 let mail_option = {
                                     receiver: user.email,
                                     subject: `[${user.fullname}] Task Distributed`,
@@ -59,7 +60,7 @@ const TaskController = {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: body,
-                                })
+                                });
 
                                 req.flash('success', 'Create new task successfully');
                                 res.redirect(`/project/${id}`);
@@ -164,7 +165,7 @@ const TaskController = {
             .then(async (task) => {
                 const user = req.session.user;
                 let project = await ProjectService.getOneByID(task.project);
-                
+
                 let email = project.leader.email;
                 let mail_option = {
                     receiver: email,
@@ -179,7 +180,7 @@ const TaskController = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: body,
-                })
+                });
 
                 LogService.create({ author: user.id, task: task._id, body: 'Submit task' })
                     .then(() => {
@@ -285,21 +286,29 @@ const TaskController = {
         });
     },
     postAddMember: (req, res, next) => {
-        const { taskID } = req.body;
-        // res.json(taskID);
-        // TaskService.getOneByID(taskID)
-        //     .then((task) => {
-        //         if (task) {
-        //             task.members.push(memberID);
-        //             task.save();
-        //             req.flash('success', 'Add member successful');
-        //             return res.redirect(`/project/${req.session.projectID}`);
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         req.flash('error', 'Add member failed ' + err);
-        //         return res.redirect(`/project/${req.session.projectID}`);
-        //     });
+        const { taskID, memberID } = req.params;
+        TaskService.getOneByIdAndUpdate(taskID)
+            .then((task) => {
+                if (task) {
+                    let members = task.members;
+                    members.push(memberID);
+                    task.members = members;
+                    task.save();
+                    req.flash('success', 'Add member successful');
+                    return res.redirect(`/project/${req.session.projectID}`);
+                }
+            })
+            .catch((err) => {
+                req.flash('error', 'Add member failed ' + err);
+                return res.redirect(`/project/${req.session.projectID}`);
+            });
+    },
+    getMemberNotInTask: async (req, res, next) => {
+        let currentTask = await TaskService.getOneByID(req.params.id);
+        const excludedIds = currentTask.members.map((member) => member._id);
+        Member.find({ _id: { $nin: excludedIds }, position: 'member' }).then((members) => {
+            res.json(members);
+        });
     },
 };
 

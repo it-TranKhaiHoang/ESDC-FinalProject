@@ -127,7 +127,7 @@
                                <i class="fa-solid fa-business-time"></i> {{formatDate end_date}}
                         <br>
                                 {{#each members}}
-                                <i class="fa-solid fa-user"></i> {{fullname}}
+                                <i class="fa-solid fa-user"></i> {{fullname}} <br>
                                 {{/each}}
                             </div>
                         </div>
@@ -151,7 +151,7 @@
                             </div>
                             <div class="task-ops">
                                {{#each members}}
-                                <i class="fa-solid fa-user"></i> {{fullname}}
+                                <i class="fa-solid fa-user"></i> {{fullname}} <br>
                               {{/each}}
 
                             </div>
@@ -272,10 +272,7 @@
                             </tr>
                         </thead>
                         <tbody id="ListMember">
-                            {{#if empty}}
-                            
-                            {{else}}
-                            {{#each members}}
+                            {{!-- {{#each members}}
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
@@ -298,15 +295,14 @@
                                   <input type="text" class="d-none" id="taskID" name="taskID">
                                   <input type="text" class="d-none" value="{{id}}" name="memberID">
                                 <td>
-                                    <button data-toggle="modal"
+                                    <button type="submit" data-toggle="modal"
                                         class="btn btn-link btn-rounded btn-sm fw-bold">
                                         Add
                                     </button>
                                 </td>
                                 </form>
                             </tr>
-                            {{/each}}
-                            {{/if}}
+                            {{/each}} --}}
 
                         </tbody>
                     </table>

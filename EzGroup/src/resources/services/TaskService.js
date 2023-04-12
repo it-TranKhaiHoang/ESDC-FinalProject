@@ -13,6 +13,9 @@ const TaskService = {
         return Task.findOne(condition);
     },
     getOneByID: async (id) => {
+        return Task.findById(id).populate('members').lean();
+    },
+    getOneByIdAndUpdate: async (id) => {
         return Task.findById(id);
     },
     update: async (id, data) => {

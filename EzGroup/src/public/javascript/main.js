@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function () {
     getNumberOfProject();
 });
@@ -77,15 +78,29 @@ function fillOption() {
 }
 
 function taskClick(id, uid) {
-    $('#task-info').show();
+    
     $.ajax({
         url: `/task/${id}`,
         type: 'GET',
         dataType: 'json',
-        success: function (data, textStatus, xhr) {
-            if (!data) {
+        success: function (result, textStatus, xhr) {
+            if (!result) {
+                alert("Cannot view this task");
                 console.log('err');
             } else {
+                let data = result.task;
+                let logs = result.logs;
+                $('#ListLog').empty();
+                    logs.forEach(l => {
+                        $('#ListLog').append(
+                            `<tr>
+                                <td>${l.author.fullname}</td>
+                                <td>${l.createdAt}</td>
+                                <td>${l.body}</td>
+                            </tr>`
+                        )
+                    })
+                $('#task-info').show();
                 console.log(data);
                 const info = document.getElementById('task-info');
                 const countAttachments = data.attachments.length;
@@ -116,6 +131,7 @@ function taskClick(id, uid) {
                 <h4>${data.name}</h4>
                 <div class="link-issue my-3">
                 <button data-name="${data.name}" data-id="${id}" data-mdb-toggle="modal" data-mdb-target="#addAttach" class="btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i> Attach</button>
+                <button data-name="${data.name}" data-id="${id}" data-mdb-toggle="modal" data-mdb-target="#logModal " class="btn btn-primary"><i class="fa fa-history" aria-hidden="true"></i> Log</button>
                     <button type="button" class="btn btn-primary" data-id="${id}" data-mdb-toggle="modal" data-mdb-target="#staticBackdrop">
                         <i class="fa fa-plus" aria-hidden="true"></i> Add member
                     </button>
@@ -136,6 +152,7 @@ function taskClick(id, uid) {
             }
         },
         error: function (xhr, textStatus, errorThrown) {
+            alert("Cannot view this task");
             console.log('Error in Operation');
         },
     });
@@ -217,16 +234,32 @@ function getNumberOfProject() {
 }
 
 function MemberTaskClick(id, uid, isTask) {
-    $('#task-info').show();
+    
     $.ajax({
         url: `/task/${id}`,
         type: 'GET',
         dataType: 'json',
-        success: function (data, textStatus, xhr) {
-            if (!data) {
+        success: function (result, textStatus, xhr) {
+            if (!result) {
+                alert("Cannot view this task");
                 console.log('err');
             } else {
                 if (isTask) {
+                    let data = result.task;
+                    let logs = result.logs;
+                    $('#ListLog').empty();
+                    logs.forEach(l => {
+                        $('#ListLog').append(
+                            `<tr>
+                                <td>${l.author.fullname}</td>
+                                <td>${l.createdAt}</td>
+                                <td>${l.body}</td>
+                            </tr>`
+                        )
+                    })
+                    
+
+                    $('#task-info').show();
                     const info = document.getElementById('task-info');
                     const countAttachments = data.attachments.length;
                     let taskSingle = ``;
@@ -260,6 +293,7 @@ function MemberTaskClick(id, uid, isTask) {
                 <h4>${data.name}</h4>
                 <div class="link-issue my-3">
                     ${attachBtn}
+                    <button data-name="${data.name}" data-id="${id}" data-mdb-toggle="modal" data-mdb-target="#logModal " class="btn btn-primary"><i class="fa fa-history" aria-hidden="true"></i> Log</button>
                 </div>
                 <div class="description-box mb-3"> 
                     <span><strong>Description</strong></span>
@@ -273,6 +307,10 @@ function MemberTaskClick(id, uid, isTask) {
                 </div>
                 ${btn}
                 `;
+                }
+                else {
+                    alert('You are not member of this task');
+                    
                 }
             }
         },

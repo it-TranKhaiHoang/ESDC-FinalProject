@@ -2,8 +2,8 @@ const CommentService = require('../services/CommentService');
 
 const CommentController = {
     postCreateComment: (req, res, next) => {
-        const { author, body } = req.body;
-        const comment = { author, body };
+        const { author, project, body } = req.body;
+        const comment = { author, project, body };
         CommentService.create(comment)
             .then(() => {
                 return res.status(200).send({success: true})

@@ -5,5 +5,6 @@ const auth = require('../auth/auth');
 router.get('/management', auth, ProjectController.getProjectManagement);
 router.get('/list', auth, ProjectController.getList);
 router.post('/create', auth, ProjectController.postCreateProject);
+router.get('/complete/:id', auth, ProjectController.postCompleteProject);
 router.get('/:id', auth, ProjectController.getDetail);
 module.exports = router;

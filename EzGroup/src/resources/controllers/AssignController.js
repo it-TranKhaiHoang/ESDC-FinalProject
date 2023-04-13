@@ -20,7 +20,7 @@ const AssignController = {
         const assign = { leader: user.id, task: id, attachments };
         AssignService.create(assign)
             .then((assign) => {
-                TaskService.getOneByID(id)
+                TaskService.getOneByIdAndUpdate(id)
                     .then((task) => {
                         attachments.forEach((item) => {
                             task.attachments.push(item);

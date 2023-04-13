@@ -33,11 +33,12 @@ $(".sidebar-dropdown > a").click(function() {
     var author = $('.btnComment').data('author');
     var email = $('.btnComment').data('email');
     var fullname = $('.btnComment').data('fullname');
+    var project = $('.btnComment').data('project');
 
     $.ajax({
       url: '/comment/post',
       method: 'POST',
-      data: { body, author},
+      data: { body, project, author},
       success: function(result) {
         console.log(result);
       },

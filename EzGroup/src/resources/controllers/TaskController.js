@@ -84,11 +84,14 @@ const TaskController = {
                 res.redirect(`/project/${id}`);
             });
     },
-    getDetail: (req, res, next) => {
+    getDetail: async (req, res, next) => {
         TaskService.getOneByID(req.params.id)
-            .then((task) => {
+            .then(async (task) => {
+                
                 if (!task) return res.json({ msg: 'Not found' });
-                res.json(task);
+                let logs = await LogService.getList({task: task._id}, {}, { createdAt: -1}, 'author')
+                
+                res.json({task, logs});
             })
             .catch((err) => {
                 res.json({ error: err });

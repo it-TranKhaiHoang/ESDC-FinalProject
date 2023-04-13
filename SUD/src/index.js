@@ -4,7 +4,7 @@ const router = require('./resources/routes');
 const app = require('./config/server').init();
 const db = require('./config/db/database');
 
-db.connect();
+// db.connect();
 router(app);
 
 app.get('/', async (req, res, next) => {

@@ -56,7 +56,7 @@ const ProjectController = {
                 let mail_option = {
                     receiver: user.email,
                     subject: 'Project Initialization',
-                    html: `<p>You just have become leader of project <strong>[${project.name}]<>/strong</p>
+                    html: `<p>You just have become leader of project <strong>[${project.name}]</strong></p>
                           <p>Link: http://localhost:8080/project/${project._id}</p>    
                     `,
                 };
@@ -132,14 +132,19 @@ const ProjectController = {
                                 });
                         });
                         req.session.projectID = project._id;
-                        let comments = await CommentService.getList({}, {}, { createdAt: -1 }, 'author');
+                        let comments = await CommentService.getList(
+                            { project: project._id },
+                            {},
+                            { createdAt: -1 },
+                            'author',
+                        );
 
                         let MemberNotInProject = await MemberService.getList(
                             { _id: { $nin: listMembersID }, position: 'member' },
                             {},
                             {},
                         );
-
+                        let isCreated = project.status != 'completed'
                         res.render('pages/index', {
                             layout: 'admin',
                             project,
@@ -147,6 +152,7 @@ const ProjectController = {
                             success,
                             name: project.name,
                             id: project._id,
+                            isCreated,
                             todoTask,
                             progressTask,
                             doneTask,
@@ -189,6 +195,21 @@ const ProjectController = {
                 position: req.session.position,
             });
         });
+    },
+    postCompleteProject: (req, res, next) => {
+        {
+            ProjectService.getOne({ _id: req.params.id })
+                .then((project) => {
+                    project.status = 'completed';
+                    project.save();
+                    req.flash('success', 'Complete project successfully');
+                    res.redirect(`/project/${req.session.projectID}`);
+                })
+                .catch((err) => {
+                    req.flash('error', 'Complete project fail');
+                    res.redirect(`/project/${req.session.projectID}`);
+                });
+        }
     },
 };
 

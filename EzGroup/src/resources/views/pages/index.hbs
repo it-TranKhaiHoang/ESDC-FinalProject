@@ -1,6 +1,15 @@
 <h2>{{name}}</h2>
       <hr>
-      <input class="input" name="text" placeholder="Search..." type="search">
+      <div class="d-flex flex-row-reverse">
+        {{#isLeader position}}
+        {{#if isCreated}}
+          <button type="button" data-mdb-toggle="modal" data-mdb-target="#ConfirmComplete" class="btn btn-outline-success" data-mdb-ripple-color="dark">Complete project</button>
+        {{/if}}
+        {{/isLeader}}
+        <input class="input" name="text" placeholder="Search..." type="search">
+      
+      </div>
+
       <br>
       <a href="/project/management" type="button" class="btn btn-secondary btn-rounded mt-5" data-mdb-ripple-color="dark"> <i class="fa-solid fa-angle-left"></i> Project management</a>
       {{#if success}}
@@ -36,7 +45,7 @@
       <div style="position: relative; min-height: 500px" class="row">
 
         {{!-- Task Info --}}
-        <div id="task-info" class="task-info col-md-5">
+        <div style="min-height: 350px" id="task-info" class="task-info col-md-5">
           <h4></h4>
           
           {{!-- <div class="link-issue my-3">
@@ -84,7 +93,7 @@
         <div class="col-md-8">
             <div class="row">
               <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3  px-1 ml-2 mb-5">          
-          <div style="background-color: #F4F5F7" class="card rounded-0 shadow-sm px-2 py-2">
+          <div style="background-color: #F4F5F7; min-height: 350px" class="card rounded-0 shadow-sm px-2 py-2">
             {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
             <div class="list-title px-3 py-1 mb-2">To do</div>
             {{#each todoTask}}
@@ -97,9 +106,9 @@
                     <div class="task-ops">
                         <i class="fa-solid fa-business-time"></i> {{formatDate end_date}}
                         <br>
-                        <i class="fa-solid fa-user"></i>
+                        
                         {{#each members}}
-                         {{fullname}} -
+                         <i class="fa-solid fa-user"></i> {{fullname}} <br> 
                         {{/each}}
                     </div>
                 </div>
@@ -113,7 +122,7 @@
           </div>          
               </div>
               <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3  px-1 ml-2 mb-5">          
-                <div style="background-color: #F4F5F7" class="card rounded-0 shadow-sm px-2 py-2">
+                <div style="background-color: #F4F5F7; min-height: 350px" class="card rounded-0 shadow-sm px-2 py-2">
                   {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
                   <div class="list-title px-3 py-1 mb-2">On Progress</div>
                   {{#each progressTask}}
@@ -139,7 +148,7 @@
                 </div>          
               </div>
               <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3  px-1 ml-2 mb-5">          
-                <div style="background-color: #F4F5F7" class="card rounded-0 shadow-sm px-2 py-2">
+                <div style="background-color: #F4F5F7; min-height: 350px" class="card rounded-0 shadow-sm px-2 py-2">
                   {{!-- <img src="https://user-images.githubusercontent.com/25878302/53659076-e2204680-3c5a-11e9-8c00-0c10bcd945e6.jpg" class="card-img-top rounded-0" alt="Angular pro sidebar"> --}}
                   <div class="list-title px-3 py-1 mb-2">Done</div>
                   {{#each doneTask}}
@@ -204,7 +213,7 @@
                     <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar" />
                     <i class="fa fa-caret-down"></i>
                     </span> --}}
-                    <button data-fullname="{{fullname}}" data-email="{{email}}" data-author="{{uid}}" class="btnComment" onclick="submit_comment()" type="button" value="1">Post</button>
+                    <button data-project="{{project._id}}" data-fullname="{{fullname}}" data-email="{{email}}" data-author="{{uid}}" class="btnComment" onclick="submit_comment()" type="button" value="1">Post</button>
                   </div>
                   </div>
                 </div>
@@ -272,6 +281,75 @@
                             </tr>
                         </thead>
                         <tbody id="ListMember">
+                            {{!-- {{#each members}}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://www.gravatar.com/avatar/{{email}}?s=200&r=pg&d=retro" class="rounded-circle" alt=""
+                                            style="width: 45px; height: 45px" />
+                                        <div class="ms-3">
+                                            <p class="fw-bold mb-1">{{fullname}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{email}}
+                                </td>
+                                <td>
+                                    <div class="row mb-1">
+                                        <span class="badge badge-success rounded-pill d-inline col-8">{{status}}</span>
+                                    </div>
+                                </td>
+                                <form action="/task/addMember" method="post" class="d-none" enctype="multipart/form-data">
+                                  <input type="text" class="d-none" id="taskID" name="taskID">
+                                  <input type="text" class="d-none" value="{{id}}" name="memberID">
+                                <td>
+                                    <button type="submit" data-toggle="modal"
+                                        class="btn btn-link btn-rounded btn-sm fw-bold">
+                                        Add
+                                    </button>
+                                </td>
+                                </form>
+                            </tr>
+                            {{/each}} --}}
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class='modal-footer'>
+                    <button type='button' class='btn btn-secondary' data-mdb-dismiss='modal'>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <div
+        class='modal fade'
+        id='logModal'
+        data-mdb-backdrop='static'
+        data-mdb-keyboard='false'
+        tabindex='-1'
+        aria-labelledby='staticBackdropLabel'
+        aria-hidden='true'
+    >
+        <div class='modal-dialog modal-lg'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title' id='logModal'>Logs</h5>
+                    <button type='button' class='btn-close' data-mdb-dismiss='modal' aria-label='Close'></button>
+                </div>
+                <div class='modal-body'>
+                  <table id="memberTable" class="table align-middle mb-0 bg-white">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>User</th>
+                                <th>Time</th>
+                                <th>Log</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="ListLog">
+
                             {{!-- {{#each members}}
                             <tr>
                                 <td>
@@ -524,6 +602,31 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal -->
+<div
+  class="modal fade"
+  id="ConfirmComplete"
+  data-mdb-backdrop="static"
+  data-mdb-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="ConfirmCompleteLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ConfirmCompleteLabel">Confirm</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">Do you want to complete this project ?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+        <a href="/project/complete/{{id}}" type="button" class="btn btn-success">Confirm</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
     $(document).ready(function () {
